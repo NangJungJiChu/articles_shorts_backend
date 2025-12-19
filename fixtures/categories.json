@@ -1,0 +1,4139 @@
+[
+  {
+    "model": "posts.category",
+    "pk": "comic_new6",
+    "fields": {
+      "name": "만화"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "m_entertainer_new1",
+    "fields": {
+      "name": "남자 연예인"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "samsunglions_new",
+    "fields": {
+      "name": "삼성 라이온즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "baseball_new11",
+    "fields": {
+      "name": "국내야구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "drama_new3",
+    "fields": {
+      "name": "기타 국내 드라마"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "loan_new1",
+    "fields": {
+      "name": "대출"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "iamsolo",
+    "fields": {
+      "name": "나는 솔로"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "grsgills",
+    "fields": {
+      "name": "걸스플래닛999"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "projectnike",
+    "fields": {
+      "name": "승리의 여신 니케"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "cs_new1",
+    "fields": {
+      "name": "편의점"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hanwhaeagles_new",
+    "fields": {
+      "name": "한화 이글스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "w_entertainer",
+    "fields": {
+      "name": "여자 연예인"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tigers_new2",
+    "fields": {
+      "name": "KIA 타이거즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "leagueoflegends6",
+    "fields": {
+      "name": "리그 오브 레전드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fantasy_new2",
+    "fields": {
+      "name": "판타지"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "maplestory_new",
+    "fields": {
+      "name": "메이플스토리"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "divination_new1",
+    "fields": {
+      "name": "역학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "baseball_ab2",
+    "fields": {
+      "name": "해외야구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "idolmaster_new1",
+    "fields": {
+      "name": "아이돌마스터"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "boysiiplanet",
+    "fields": {
+      "name": "보이즈 2 플래닛"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "depression_new1",
+    "fields": {
+      "name": "우울증"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ib_new2",
+    "fields": {
+      "name": "인터넷방송"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lgtwins_new",
+    "fields": {
+      "name": "LG 트윈스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lgbt",
+    "fields": {
+      "name": "LGBT"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "giants_new3",
+    "fields": {
+      "name": "롯데 자이언츠"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bts",
+    "fields": {
+      "name": "방탄소년단"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "singagain4",
+    "fields": {
+      "name": "싱어게인4"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ncdinos",
+    "fields": {
+      "name": "NC 다이노스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "yjrs",
+    "fields": {
+      "name": "여장"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "skwyverns_new1",
+    "fields": {
+      "name": "SSG 랜더스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hiphop_new1",
+    "fields": {
+      "name": "힙합"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pridepc_new4",
+    "fields": {
+      "name": "컴퓨터 본체"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "doosanbears_new1",
+    "fields": {
+      "name": "두산 베어스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ktwiz",
+    "fields": {
+      "name": "kt 위즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mistertrot",
+    "fields": {
+      "name": "미스터 트롯"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lostark",
+    "fields": {
+      "name": "로스트아크"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "worldoftanks",
+    "fields": {
+      "name": "월드 오브 탱크"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lotto_new2",
+    "fields": {
+      "name": "토토"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sdvx",
+    "fields": {
+      "name": "사운드 볼텍스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wkbl",
+    "fields": {
+      "name": "여자농구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "football_new9",
+    "fields": {
+      "name": "해외축구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "d_fighter_new2",
+    "fields": {
+      "name": "던전앤파이터"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "car_new1",
+    "fields": {
+      "name": "자동차"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jungsopd",
+    "fields": {
+      "name": "중소기업"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "neostock",
+    "fields": {
+      "name": "주식"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "toy",
+    "fields": {
+      "name": "토이"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bitcoins_new1",
+    "fields": {
+      "name": "비트코인"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jumper",
+    "fields": {
+      "name": "점퍼"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "taeyeon_new1",
+    "fields": {
+      "name": "태연"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gambling",
+    "fields": {
+      "name": "도박, 경마"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fifaonline",
+    "fields": {
+      "name": "FC 온라인"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pokemon",
+    "fields": {
+      "name": "포켓몬스터"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tr",
+    "fields": {
+      "name": "테일즈런너"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "stream_new1",
+    "fields": {
+      "name": "스트리머"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "diet",
+    "fields": {
+      "name": "다이어트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bluecollar",
+    "fields": {
+      "name": "생산직"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ani1_new2",
+    "fields": {
+      "name": "애니-일본"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sh_new",
+    "fields": {
+      "name": "키움 히어로즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bjwstreet",
+    "fields": {
+      "name": "백종원의 골목식당"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "policeofficer",
+    "fields": {
+      "name": "순경"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rhythmgame_new1",
+    "fields": {
+      "name": "리듬게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "chicken",
+    "fields": {
+      "name": "치킨"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "battlegrounds",
+    "fields": {
+      "name": "배틀그라운드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sa",
+    "fields": {
+      "name": "서든어택"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "extra_new1",
+    "fields": {
+      "name": "헬스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "4year_university",
+    "fields": {
+      "name": "4년제 대학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "iu_new",
+    "fields": {
+      "name": "아이유"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "japan_entertainment",
+    "fields": {
+      "name": "일본 연예"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "disease",
+    "fields": {
+      "name": "메르스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "army",
+    "fields": {
+      "name": "육군"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kancolle_new1",
+    "fields": {
+      "name": "칸코레"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mystery",
+    "fields": {
+      "name": "미스터리"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "yunha",
+    "fields": {
+      "name": "윤하"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "figureskating_new",
+    "fields": {
+      "name": "피겨스케이팅"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "loveconsultation",
+    "fields": {
+      "name": "연애상담"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "siseol",
+    "fields": {
+      "name": "시설관리"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "foreign_university",
+    "fields": {
+      "name": "외국대학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "climbing",
+    "fields": {
+      "name": "등산"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ecig",
+    "fields": {
+      "name": "전자담배"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "akb48",
+    "fields": {
+      "name": "AKB48"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "employment",
+    "fields": {
+      "name": "취업"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "airforce",
+    "fields": {
+      "name": "공군"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gf",
+    "fields": {
+      "name": "걸그룹 여자친구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "day6",
+    "fields": {
+      "name": "DAY6"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rtd",
+    "fields": {
+      "name": "로드 투 드래곤"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "blackpink",
+    "fields": {
+      "name": "블랙핑크"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pripara",
+    "fields": {
+      "name": "프리파라"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "clashofclans",
+    "fields": {
+      "name": "클래시 오브 클랜"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "outofwork",
+    "fields": {
+      "name": "백수"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "basketball",
+    "fields": {
+      "name": "농구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "baduk",
+    "fields": {
+      "name": "바둑"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tarocard",
+    "fields": {
+      "name": "타로카드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wwe",
+    "fields": {
+      "name": "프로레슬링"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "reptile",
+    "fields": {
+      "name": "파충류, 양서류"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "entertainment",
+    "fields": {
+      "name": "국내연예-남자,여자"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "minecraft",
+    "fields": {
+      "name": "마인크래프트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "correction",
+    "fields": {
+      "name": "교정직"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "insurance",
+    "fields": {
+      "name": "보험"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ripley1",
+    "fields": {
+      "name": "친밀한 리플리"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dongduk",
+    "fields": {
+      "name": "동덕여대"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "medicalscience",
+    "fields": {
+      "name": "의학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tabletpc",
+    "fields": {
+      "name": "태블릿PC"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fight_game",
+    "fields": {
+      "name": "격투게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "iphone",
+    "fields": {
+      "name": "아이폰"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dcbest",
+    "fields": {
+      "name": "실시간 베스트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dreamhigh",
+    "fields": {
+      "name": "드림하이"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pokemongo",
+    "fields": {
+      "name": "포켓몬 GO"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "golf",
+    "fields": {
+      "name": "골프"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "alopecia",
+    "fields": {
+      "name": "탈모"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "slife",
+    "fields": {
+      "name": "자취, 독거"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lovegame",
+    "fields": {
+      "name": "미연시"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gongik_new",
+    "fields": {
+      "name": "공익"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "travel_asia",
+    "fields": {
+      "name": "여행-동남아"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "game_mabinogi1",
+    "fields": {
+      "name": "마비노기"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sc",
+    "fields": {
+      "name": "흙수저"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "smartphone",
+    "fields": {
+      "name": "스마트폰"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "coq",
+    "fields": {
+      "name": "자격증"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "food",
+    "fields": {
+      "name": "기타음식"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "keion",
+    "fields": {
+      "name": "케이온"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tree",
+    "fields": {
+      "name": "식물"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "cellularphone",
+    "fields": {
+      "name": "휴대폰"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "redvelvet",
+    "fields": {
+      "name": "레드벨벳"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lotto2",
+    "fields": {
+      "name": "로또"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pimple",
+    "fields": {
+      "name": "여드름"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tce",
+    "fields": {
+      "name": "임용고시"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "god",
+    "fields": {
+      "name": "god"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "creditcard",
+    "fields": {
+      "name": "신용카드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "accident_new",
+    "fields": {
+      "name": "막장"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lineagem",
+    "fields": {
+      "name": "리니지M"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "swf3",
+    "fields": {
+      "name": "월드 오브 스트릿 우먼 파이터"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pgschool",
+    "fields": {
+      "name": "대학원"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "city",
+    "fields": {
+      "name": "도시"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "programming",
+    "fields": {
+      "name": "프로그래밍"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "starcraft_new",
+    "fields": {
+      "name": "스타크래프트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "announcer2",
+    "fields": {
+      "name": "아나운서"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "latale",
+    "fields": {
+      "name": "라테일"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "cosmetic",
+    "fields": {
+      "name": "향수, 화장품"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kart",
+    "fields": {
+      "name": "카트라이더"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rusiaukra",
+    "fields": {
+      "name": "러시아-우크라이나"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mcthemax",
+    "fields": {
+      "name": "엠씨 더 맥스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "shinee_new",
+    "fields": {
+      "name": "샤이니"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hair",
+    "fields": {
+      "name": "헤어스타일"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bd",
+    "fields": {
+      "name": "검은사막"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "monsterjtbc",
+    "fields": {
+      "name": "드라마 괴물"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wendy",
+    "fields": {
+      "name": "웬디"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fashion_acc",
+    "fields": {
+      "name": "안경"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wcaster",
+    "fields": {
+      "name": "기상캐스터"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pad",
+    "fields": {
+      "name": "퍼즐앤드래곤"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "koroad",
+    "fields": {
+      "name": "운전면허"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "navy",
+    "fields": {
+      "name": "해군"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fakearmy",
+    "fields": {
+      "name": "상근예비역"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "earphone",
+    "fields": {
+      "name": "이어폰, 헤드폰"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "composition3d",
+    "fields": {
+      "name": "CG, 3D"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "anigallers_new",
+    "fields": {
+      "name": "디시애갤러스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "travel_japan",
+    "fields": {
+      "name": "여행-일본"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "exam_new2",
+    "fields": {
+      "name": "수능"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kpopdemonhunters",
+    "fields": {
+      "name": "케이팝 데몬 헌터스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pc",
+    "fields": {
+      "name": "PC방"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "elsword_new1",
+    "fields": {
+      "name": "엘소드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "de",
+    "fields": {
+      "name": "배달"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sweets",
+    "fields": {
+      "name": "과자, 빵"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "classic",
+    "fields": {
+      "name": "클래식"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bluewings",
+    "fields": {
+      "name": "수원삼성블루윙즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "toeic",
+    "fields": {
+      "name": "토익"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "game_classic1",
+    "fields": {
+      "name": "고전게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lovelive_new1",
+    "fields": {
+      "name": "러브라이브"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mcdonalds",
+    "fields": {
+      "name": "맥도날드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "acbs",
+    "fields": {
+      "name": "학점은행제"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "f_drama",
+    "fields": {
+      "name": "기타 미국드라마"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "eternalcity",
+    "fields": {
+      "name": "이터널시티"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "parkbogum",
+    "fields": {
+      "name": "박보검"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bowling",
+    "fields": {
+      "name": "볼링"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "history_qna",
+    "fields": {
+      "name": "역사 Q&A"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "incheon",
+    "fields": {
+      "name": "인천대"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bike",
+    "fields": {
+      "name": "바이크"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "seulgi",
+    "fields": {
+      "name": "슬기"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "physical1003",
+    "fields": {
+      "name": "피지컬 아시아"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "girlsundpanzer",
+    "fields": {
+      "name": "걸즈 앤 판처"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jaejoong",
+    "fields": {
+      "name": "김재중"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dho",
+    "fields": {
+      "name": "대항해시대"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gongmozoo",
+    "fields": {
+      "name": "공모주 청약"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "shp",
+    "fields": {
+      "name": "박시환"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "starcraft2_new",
+    "fields": {
+      "name": "스타크래프트 II"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "stationery",
+    "fields": {
+      "name": "문구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "eye",
+    "fields": {
+      "name": "안구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "football_k",
+    "fields": {
+      "name": "국내축구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rlike",
+    "fields": {
+      "name": "로그라이크"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "baram",
+    "fields": {
+      "name": "바람의 나라"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wedding",
+    "fields": {
+      "name": "결혼"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sisyphus",
+    "fields": {
+      "name": "시지프스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ma9",
+    "fields": {
+      "name": "마구마구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "unleashed",
+    "fields": {
+      "name": "언리쉬드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "philosophy",
+    "fields": {
+      "name": "철학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "johnnys",
+    "fields": {
+      "name": "쟈니스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tea",
+    "fields": {
+      "name": "차, 음료"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mabi_heroes2",
+    "fields": {
+      "name": "마비노기 영웅전"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "English",
+    "fields": {
+      "name": "영어"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "socialwelfare",
+    "fields": {
+      "name": "사회복지사"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ohmygirl",
+    "fields": {
+      "name": "오마이걸"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kimsoohyun",
+    "fields": {
+      "name": "김수현"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "animal",
+    "fields": {
+      "name": "동물,기타"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sbsdocu",
+    "fields": {
+      "name": "그것이 알고 싶다"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "universe",
+    "fields": {
+      "name": "우주"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bicycle",
+    "fields": {
+      "name": "자전거"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mathematics",
+    "fields": {
+      "name": "수학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "outsiders",
+    "fields": {
+      "name": "아웃사이더"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "etc_entertainment3",
+    "fields": {
+      "name": "해외연예"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "clashroyale",
+    "fields": {
+      "name": "클래시 로얄"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "amusementpark",
+    "fields": {
+      "name": "놀이공원"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jackson",
+    "fields": {
+      "name": "마이클 잭슨"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nyj",
+    "fields": {
+      "name": "남양주"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fish",
+    "fields": {
+      "name": "물고기"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "cartoon",
+    "fields": {
+      "name": "카툰-연재"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jaebum",
+    "fields": {
+      "name": "임재범"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "comedy_new1",
+    "fields": {
+      "name": "코미디 프로그램"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "web_fic",
+    "fields": {
+      "name": "라이트 노벨"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "samgugji",
+    "fields": {
+      "name": "삼국지"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "touhou",
+    "fields": {
+      "name": "동방 프로젝트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "room",
+    "fields": {
+      "name": "ROOM"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "joo",
+    "fields": {
+      "name": "주"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "getamped",
+    "fields": {
+      "name": "겟앰프드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "vessel",
+    "fields": {
+      "name": "선박"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sig",
+    "fields": {
+      "name": "서인국"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lenapark",
+    "fields": {
+      "name": "박정현"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "footwear",
+    "fields": {
+      "name": "신발"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "movie2",
+    "fields": {
+      "name": "영화"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "literature",
+    "fields": {
+      "name": "문학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "yoona",
+    "fields": {
+      "name": "윤아"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kimsohye",
+    "fields": {
+      "name": "김소혜"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pharmacy",
+    "fields": {
+      "name": "약학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "naul",
+    "fields": {
+      "name": "나얼"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "twice_new",
+    "fields": {
+      "name": "TWICE"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "beatles",
+    "fields": {
+      "name": "비틀즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nmh",
+    "fields": {
+      "name": "노무현"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "psp",
+    "fields": {
+      "name": "PSP"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pizza",
+    "fields": {
+      "name": "피자"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "vocal",
+    "fields": {
+      "name": "보컬"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mbcgirlgroup",
+    "fields": {
+      "name": "방과후 설렘"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fps",
+    "fields": {
+      "name": "FPS게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "junsu",
+    "fields": {
+      "name": "김준수"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ysj",
+    "fields": {
+      "name": "육성재"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kkisland",
+    "fields": {
+      "name": "크크섬의 비밀"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gsnu",
+    "fields": {
+      "name": "경상국립대"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "soulworker",
+    "fields": {
+      "name": "소울워커"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ff14",
+    "fields": {
+      "name": "파이널판타지14"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "compose",
+    "fields": {
+      "name": "작곡"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "shaving",
+    "fields": {
+      "name": "면도"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hos",
+    "fields": {
+      "name": "히어로즈 오브 더 스톰"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "girl7",
+    "fields": {
+      "name": "청춘불패"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "shinhwa",
+    "fields": {
+      "name": "신화"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "webtoon",
+    "fields": {
+      "name": "웹툰"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "5fingers",
+    "fields": {
+      "name": "다섯 손가락"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "changwook",
+    "fields": {
+      "name": "지창욱"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "frustration",
+    "fields": {
+      "name": "좌절"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tennis",
+    "fields": {
+      "name": "테니스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kpu",
+    "fields": {
+      "name": "한국공학대"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "boxing",
+    "fields": {
+      "name": "복싱"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "culinaryclasswars",
+    "fields": {
+      "name": "흑백요리사 요리계급전쟁"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "seventeen",
+    "fields": {
+      "name": "세븐틴"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "cyphers",
+    "fields": {
+      "name": "사이퍼즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "vm",
+    "fields": {
+      "name": "수의학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "onepiece",
+    "fields": {
+      "name": "원피스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jisoo",
+    "fields": {
+      "name": "서지수"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "blackdesertmobile",
+    "fields": {
+      "name": "검은사막 모바일"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "special_forces",
+    "fields": {
+      "name": "특수부대"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "book",
+    "fields": {
+      "name": "도서"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "frozen",
+    "fields": {
+      "name": "겨울왕국"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "shooting",
+    "fields": {
+      "name": "슈팅 게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kdani",
+    "fields": {
+      "name": "강다니엘"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "exam_gosi",
+    "fields": {
+      "name": "고시, 시험"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gaekjoo",
+    "fields": {
+      "name": "장사의 신 (드라마)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "the_division",
+    "fields": {
+      "name": "더 디비전"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tattoo",
+    "fields": {
+      "name": "문신, 헤나"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jsh",
+    "fields": {
+      "name": "정승환"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "government_new1",
+    "fields": {
+      "name": "공무원"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "oriental_medicine",
+    "fields": {
+      "name": "한의학"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tartaros",
+    "fields": {
+      "name": "타르타로스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hellkorea",
+    "fields": {
+      "name": "헬조선"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wow_new3",
+    "fields": {
+      "name": "WOW"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "boysplanet",
+    "fields": {
+      "name": "보이즈플래닛"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nayeone",
+    "fields": {
+      "name": "나연"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "top12",
+    "fields": {
+      "name": "아이즈원"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "insect",
+    "fields": {
+      "name": "곤충"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "game1_new",
+    "fields": {
+      "name": "게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "parkhyoshin",
+    "fields": {
+      "name": "박효신"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fishing",
+    "fields": {
+      "name": "낚시"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "animator",
+    "fields": {
+      "name": "애니메이터"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "maplestory2",
+    "fields": {
+      "name": "메이플스토리2"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "shm",
+    "fields": {
+      "name": "손흥민"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "apink",
+    "fields": {
+      "name": "에이핑크"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "etc_g",
+    "fields": {
+      "name": "디지털카메라"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "chzzk",
+    "fields": {
+      "name": "치지직"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "aion2",
+    "fields": {
+      "name": "아이온2"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dfip",
+    "fields": {
+      "name": "던파IP"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "chainsaw",
+    "fields": {
+      "name": "체인소맨"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "stockus",
+    "fields": {
+      "name": "미국 주식"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "projectmx",
+    "fields": {
+      "name": "블루 아카이브"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "enban",
+    "fields": {
+      "name": "에반(마비노기 모바일)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "oticket",
+    "fields": {
+      "name": "오리지널 티켓"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "onshinproject",
+    "fields": {
+      "name": "원신 project"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gov",
+    "fields": {
+      "name": "니케"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kizunaai",
+    "fields": {
+      "name": "키즈나 아이"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "stellive",
+    "fields": {
+      "name": "스텔라이브"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hanmath",
+    "fields": {
+      "name": "한석원"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "genrenovel",
+    "fields": {
+      "name": "장르소설"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "prospect",
+    "fields": {
+      "name": "퓨처스리그"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "aoegame",
+    "fields": {
+      "name": "중세게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bser",
+    "fields": {
+      "name": "이터널 리턴"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "centristpolitics",
+    "fields": {
+      "name": "중도정치"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "loleague1",
+    "fields": {
+      "name": "롤 대회"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "harukazena",
+    "fields": {
+      "name": "하루(카제나)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "barca",
+    "fields": {
+      "name": "FC 바르셀로나"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "chartanalysis",
+    "fields": {
+      "name": "차트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fromsoftware",
+    "fields": {
+      "name": "프롬 소프트웨어"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tft",
+    "fields": {
+      "name": "전략적 팀 전투"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "minjudang",
+    "fields": {
+      "name": "더불어민주당"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "americanbasketball",
+    "fields": {
+      "name": "미국 농구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "womanvolleyball",
+    "fields": {
+      "name": "여자배구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "zenless_zone_zero",
+    "fields": {
+      "name": "젠레스 존 제로"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tenbagger",
+    "fields": {
+      "name": "해외주식"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "aespa_reality",
+    "fields": {
+      "name": "에스파 리얼리티"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "starsavior",
+    "fields": {
+      "name": "스타 세이비어"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lobotomycorporation",
+    "fields": {
+      "name": "로보토미 코퍼레이션"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "vr",
+    "fields": {
+      "name": "브이알챗 (VRChat)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rollthechess",
+    "fields": {
+      "name": "트릭컬"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "takashitakeuchi",
+    "fields": {
+      "name": "타케우치 타카시"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sdijn",
+    "fields": {
+      "name": "시대인재 N 재수종합"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fromis",
+    "fields": {
+      "name": "프로미스나인"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jett",
+    "fields": {
+      "name": "제트(발로란트)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "els",
+    "fields": {
+      "name": "엘리오스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "manchestercity",
+    "fields": {
+      "name": "맨체스터 시티"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mapleland",
+    "fields": {
+      "name": "메이플랜드(메이플스토리)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nmixx",
+    "fields": {
+      "name": "NMIXX(엔믹스)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wutheringwaves",
+    "fields": {
+      "name": "명조 워더링 웨이브"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gaon",
+    "fields": {
+      "name": "써클차트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "summonersrift",
+    "fields": {
+      "name": "소환사의 협곡"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "game_nintendo",
+    "fields": {
+      "name": "닌텐도"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gundam",
+    "fields": {
+      "name": "건담"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "staraiload",
+    "fields": {
+      "name": "붕괴 스타레일"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tottenham",
+    "fields": {
+      "name": "토트넘 핫스퍼"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "masterduel",
+    "fields": {
+      "name": "유희왕 마스터듀얼"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "singer_",
+    "fields": {
+      "name": "일본 가수"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "umamusu",
+    "fields": {
+      "name": "우마무스메 프리티 더비"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nasdaq",
+    "fields": {
+      "name": "나스닥"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dkslflzkssk",
+    "fields": {
+      "name": "아이리 칸나"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kpopgirlgroup",
+    "fields": {
+      "name": "한국 여자아이돌"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "qwer_fan",
+    "fields": {
+      "name": "QWER(큐떱이알)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "electricguitar",
+    "fields": {
+      "name": "일렉트릭기타"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "maplerpg",
+    "fields": {
+      "name": "메이플 키우기"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "centristconservatis",
+    "fields": {
+      "name": "중도보수"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "djmaxrespect",
+    "fields": {
+      "name": "디제이맥스 리스펙트 V"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wackgood",
+    "fields": {
+      "name": "우왁굳(유튜버)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "uhhorangi",
+    "fields": {
+      "name": "울산 HD FC"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "arcraiders",
+    "fields": {
+      "name": "아크 레이더스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "newconservativeparty",
+    "fields": {
+      "name": "새로운보수당"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "overwatch2",
+    "fields": {
+      "name": "오버워치 2"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "uspolitics",
+    "fields": {
+      "name": "미국 정치"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "eft",
+    "fields": {
+      "name": "타르코프"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "helldiversseries",
+    "fields": {
+      "name": "헬다이버즈 시리즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wrtnai",
+    "fields": {
+      "name": "뤼튼"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rightpolitics",
+    "fields": {
+      "name": "국민의힘 비대위"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "picknmixx",
+    "fields": {
+      "name": "픽 엔믹스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "billboard",
+    "fields": {
+      "name": "빌보드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "legendtigers",
+    "fields": {
+      "name": "전설의 타이거즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "cpyv22",
+    "fields": {
+      "name": "컴투스프로야구 V25"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mikuhatsune",
+    "fields": {
+      "name": "하츠네 미쿠"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sevennightsrebirth",
+    "fields": {
+      "name": "세븐나이츠 리버스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "newheadphone",
+    "fields": {
+      "name": "헤드폰"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jeongbyeongkwon",
+    "fields": {
+      "name": "정병권"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pledisgirls",
+    "fields": {
+      "name": "플레디스걸즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "transferlove4",
+    "fields": {
+      "name": "환승연애 시즌4"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "zzzzaaaa",
+    "fields": {
+      "name": "최립우(보이즈2플래닛)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "digitalpicture",
+    "fields": {
+      "name": "디지털 사진"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "taleskingdom",
+    "fields": {
+      "name": "동화나라(테일즈런너)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kospi",
+    "fields": {
+      "name": "코스피"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "krstock",
+    "fields": {
+      "name": "한국 주식"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fromis9_weverse",
+    "fields": {
+      "name": "프로미스나인 위버스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "loaon",
+    "fields": {
+      "name": "로아온"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "aichatting",
+    "fields": {
+      "name": "AI 채팅"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "fromis9real",
+    "fields": {
+      "name": "프로미스나인 리얼리티"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bang_dream",
+    "fields": {
+      "name": "BanG Dream!(뱅드림!)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "epicseven",
+    "fields": {
+      "name": "에픽세븐"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kfc",
+    "fields": {
+      "name": "KFC"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sunshine",
+    "fields": {
+      "name": "러브라이브 선샤인"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "chaoszero",
+    "fields": {
+      "name": "카오스제로 나이트메어"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "manosaba",
+    "fields": {
+      "name": "마법소녀의 마녀재판"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gf2",
+    "fields": {
+      "name": "소녀전선2 망명"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "leesedol",
+    "fields": {
+      "name": "이세계아이돌"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "stellasora",
+    "fields": {
+      "name": "스텔라 소라"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ufcmma",
+    "fields": {
+      "name": "UFC 종합격투기 (MMA)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "majorleague",
+    "fields": {
+      "name": "MLB(메이저리그)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "zetam",
+    "fields": {
+      "name": "제타"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "singlebungle1472",
+    "fields": {
+      "name": "싱글벙글 지구촌"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "illit",
+    "fields": {
+      "name": "아일릿"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "howlingabyss",
+    "fields": {
+      "name": "칼바람 나락"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mibj",
+    "fields": {
+      "name": "명일방주"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "girlsong",
+    "fields": {
+      "name": "여자아이돌 음악"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "owgenji",
+    "fields": {
+      "name": "겐지"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "songhayoung",
+    "fields": {
+      "name": "송하영"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "whiskey",
+    "fields": {
+      "name": "위스키"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "inazuma",
+    "fields": {
+      "name": "이나즈마 일레븐"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tk8",
+    "fields": {
+      "name": "철권8"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "war",
+    "fields": {
+      "name": "군사"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bikebari",
+    "fields": {
+      "name": "바이크 여행"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mfgo",
+    "fields": {
+      "name": "페이트그랜드오더"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "123ive",
+    "fields": {
+      "name": "1,2,3 아이브"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "running",
+    "fields": {
+      "name": "러닝"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pjsekaikr",
+    "fields": {
+      "name": "프로젝트 세카이 한국서버"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bocchi_the_rock",
+    "fields": {
+      "name": "봇치 더 락"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "formula1",
+    "fields": {
+      "name": "F1(포뮬러 원)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "efb",
+    "fields": {
+      "name": "이풋볼"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wherewindsmeets",
+    "fields": {
+      "name": "연운"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "a778827",
+    "fields": {
+      "name": "귀멸의 칼날"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tcggame",
+    "fields": {
+      "name": "트레이딩카드게임(TCG)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "zuttomayo",
+    "fields": {
+      "name": "즛토마요"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sff",
+    "fields": {
+      "name": "SFF"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pebble",
+    "fields": {
+      "name": "돌"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ansrhkaks",
+    "fields": {
+      "name": "문과"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kaguramea",
+    "fields": {
+      "name": "카구라 메아"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "leejaemyungdo",
+    "fields": {
+      "name": "이재명은 합니다"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "weverse",
+    "fields": {
+      "name": "위버스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "teamshanghaialice",
+    "fields": {
+      "name": "상하이앨리스환악단"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ttwar",
+    "fields": {
+      "name": "토탈 워"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kpop_",
+    "fields": {
+      "name": "케이팝(K-POP)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mechanicalkeyboard",
+    "fields": {
+      "name": "기계식키보드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "joongdo1",
+    "fields": {
+      "name": "중도"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gamlam",
+    "fields": {
+      "name": "감람"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "destiny",
+    "fields": {
+      "name": "데스티니"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rome",
+    "fields": {
+      "name": "패러독스 인터랙티브"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nokanto",
+    "fields": {
+      "name": "일본여행 - 관동이외"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "thesingularity",
+    "fields": {
+      "name": "특이점이 온다"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pokemontcgpocket",
+    "fields": {
+      "name": "포켓몬 카드 게임 포켓"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ptjabcd",
+    "fields": {
+      "name": "박태준 유니버스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "umamusme",
+    "fields": {
+      "name": "우마무스메"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bodybuilding",
+    "fields": {
+      "name": "보디빌딩"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "morianmabi",
+    "fields": {
+      "name": "마비노기 류트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lilyfever",
+    "fields": {
+      "name": "대세는 백합"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "needy",
+    "fields": {
+      "name": "애정결핍"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "of",
+    "fields": {
+      "name": "해외선물"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "atletico",
+    "fields": {
+      "name": "아틀레티코 마드리드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "galaxy",
+    "fields": {
+      "name": "갤럭시"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "postrockgallery",
+    "fields": {
+      "name": "포스트락"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sosad",
+    "fields": {
+      "name": "조울증"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "joosool",
+    "fields": {
+      "name": "주술회전"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "theaterdays",
+    "fields": {
+      "name": "밀리시타"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nenekomashiro",
+    "fields": {
+      "name": "네네코 마시로"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sajaboys",
+    "fields": {
+      "name": "사자 보이즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "coffee",
+    "fields": {
+      "name": "커피"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "furry",
+    "fields": {
+      "name": "수인"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jiheon",
+    "fields": {
+      "name": "백지헌"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "grancypher",
+    "fields": {
+      "name": "그랑사이퍼 (그랑블루)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rhdrldjq",
+    "fields": {
+      "name": "공기업"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "manariafriends",
+    "fields": {
+      "name": "마나리아(섀도우버스)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "comics",
+    "fields": {
+      "name": "월간만화"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dbd",
+    "fields": {
+      "name": "데드바이데이라이트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "chel",
+    "fields": {
+      "name": "첼시"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nufc",
+    "fields": {
+      "name": "뉴캐슬 유나이티드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mp",
+    "fields": {
+      "name": "노래연습"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hanyoil",
+    "fields": {
+      "name": "오늘의 한요일은 여자다"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "commercial_movie",
+    "fields": {
+      "name": "상업영화"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "basketballkorea",
+    "fields": {
+      "name": "남자농구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pjsekai",
+    "fields": {
+      "name": "프로젝트 세카이"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mnet_k",
+    "fields": {
+      "name": "엠넷"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "35123215",
+    "fields": {
+      "name": "일본 마작"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "akane_lize",
+    "fields": {
+      "name": "아카네 리제"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "battlefield",
+    "fields": {
+      "name": "배틀필드 시리즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "onepieceblood",
+    "fields": {
+      "name": "원피스 버닝블러드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "japanidolgirls",
+    "fields": {
+      "name": "일본 여자 아이돌"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bamin",
+    "fields": {
+      "name": "배민커넥트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "automata",
+    "fields": {
+      "name": "오토마타"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pathofexile",
+    "fields": {
+      "name": "패스 오브 엑자일"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "goodday2",
+    "fields": {
+      "name": "소개팅"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lith",
+    "fields": {
+      "name": "리스항구(메이플스토리)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "castlewebtoon",
+    "fields": {
+      "name": "캐슬 웹툰"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wcserver",
+    "fields": {
+      "name": "바람의나라 클래식"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "indiegame",
+    "fields": {
+      "name": "인디게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "whitehouse",
+    "fields": {
+      "name": "백악관"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "arsenalfc",
+    "fields": {
+      "name": "아스날"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "capcommh",
+    "fields": {
+      "name": "몬스터헌터 시리즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "t1win",
+    "fields": {
+      "name": "티원 응원"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dnfm",
+    "fields": {
+      "name": "던전앤파이터 M"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "onlyluckygame",
+    "fields": {
+      "name": "운빨존많겜"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "first_descendant",
+    "fields": {
+      "name": "퍼스트 디센던트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "inkling",
+    "fields": {
+      "name": "잉클링"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mf",
+    "fields": {
+      "name": "남자패션"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sc2",
+    "fields": {
+      "name": "우주전쟁"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rayrei",
+    "fields": {
+      "name": "레이"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "heroic",
+    "fields": {
+      "name": "GMS 히로익"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jinbo",
+    "fields": {
+      "name": "진보정치"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gfl2",
+    "fields": {
+      "name": "소녀전선 시리즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "owcsgall",
+    "fields": {
+      "name": "OWCS"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dusdns",
+    "fields": {
+      "name": "개봉(연운)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pubgkl",
+    "fields": {
+      "name": "PKL"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "verticalsue",
+    "fields": {
+      "name": "버츄얼 고소"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tgijjdd",
+    "fields": {
+      "name": "웹소설 연재"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wowretail",
+    "fields": {
+      "name": "WOW 리테일"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gotp",
+    "fields": {
+      "name": "국민의 정부 (김대중)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "washcar",
+    "fields": {
+      "name": "세차"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lovecome",
+    "fields": {
+      "name": "러브코미디만화"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "idolism",
+    "fields": {
+      "name": "아이돌리즘"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "volleyballman",
+    "fields": {
+      "name": "남자배구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "browndust2",
+    "fields": {
+      "name": "브라운더스트 2"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mounjaro",
+    "fields": {
+      "name": "마운자로"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bleachsoulresonance",
+    "fields": {
+      "name": "블리치-소울 레조넌스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kingcon",
+    "fields": {
+      "name": "대왕콘"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "streetfighter",
+    "fields": {
+      "name": "스트리트 파이터"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "shinycolors",
+    "fields": {
+      "name": "샤이니 컬러즈"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "eatingdisorder",
+    "fields": {
+      "name": "식이장애"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jejuutd",
+    "fields": {
+      "name": "제주SK FC"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "baseball_queen",
+    "fields": {
+      "name": "야구여왕"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "daeritaksongdriving",
+    "fields": {
+      "name": "대리탁송기사"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "laptop",
+    "fields": {
+      "name": "노트북"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "limbuscompany",
+    "fields": {
+      "name": "림버스 컴퍼니"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "td2",
+    "fields": {
+      "name": "더 디비전 2"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "alternative_history",
+    "fields": {
+      "name": "대체역사"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hyang",
+    "fields": {
+      "name": "향수"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "twiceyou",
+    "fields": {
+      "name": "트와이스 유튜브"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gukbase",
+    "fields": {
+      "name": "국민의힘 바로 세우기"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "filmcamera",
+    "fields": {
+      "name": "필름카메라"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "diablo2resurrected",
+    "fields": {
+      "name": "디아블로2 레저렉션"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "darktide",
+    "fields": {
+      "name": "워해머 다크타이드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "cycle",
+    "fields": {
+      "name": "로드싸이클"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "jiwonpark",
+    "fields": {
+      "name": "박지원(프로미스나인)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "tenkoshibuki",
+    "fields": {
+      "name": "텐코 시부키"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "coupangar",
+    "fields": {
+      "name": "쿠팡 아르바이트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "wsm2",
+    "fields": {
+      "name": "워해머 스페이스 마린2"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gbcry11",
+    "fields": {
+      "name": "걸즈밴드크라이"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "homerace",
+    "fields": {
+      "name": "플래닛C 홈레이스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "espressocookie",
+    "fields": {
+      "name": "에스프레소맛 쿠키"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hle",
+    "fields": {
+      "name": "한화생명"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bass",
+    "fields": {
+      "name": "베이스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "alliescon",
+    "fields": {
+      "name": "국민의힘"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "koreantoon",
+    "fields": {
+      "name": "한국만화"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "muscleman",
+    "fields": {
+      "name": "근력운동"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nogada",
+    "fields": {
+      "name": "노가다"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "arahashi_tabi",
+    "fields": {
+      "name": "아라하시 타비"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "farewell",
+    "fields": {
+      "name": "이별"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pokemonza",
+    "fields": {
+      "name": "포켓몬 레전즈 Z-A"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "heidel",
+    "fields": {
+      "name": "검은사막 하이델"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mafia42",
+    "fields": {
+      "name": "마피아42"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "purikone_redive",
+    "fields": {
+      "name": "프린세스커넥트 리다이브"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nojisun",
+    "fields": {
+      "name": "노지선"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "dsrqsv",
+    "fields": {
+      "name": "배달대행 기사들 모임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "vindic",
+    "fields": {
+      "name": "마비노기 영웅전 에린"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "euca",
+    "fields": {
+      "name": "애니-유럽"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "blnovel",
+    "fields": {
+      "name": "BL소설"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "transit",
+    "fields": {
+      "name": "교통"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mnt",
+    "fields": {
+      "name": "모니터"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hyunchoc",
+    "fields": {
+      "name": "현대자동차 촉탁계약직"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sdggeneeternal",
+    "fields": {
+      "name": "SD건담G제네이터널"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "sentai2",
+    "fields": {
+      "name": "슈퍼전대"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "itssaexodus",
+    "fields": {
+      "name": "잇싸"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "warship",
+    "fields": {
+      "name": "월드오브워쉽 글로벌"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "duetnightabyss",
+    "fields": {
+      "name": "듀엣 나이트 어비스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "aion2bj",
+    "fields": {
+      "name": "아이온2 인방"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "byyy",
+    "fields": {
+      "name": "병인양요"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mouse",
+    "fields": {
+      "name": "마우스"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "pikmin",
+    "fields": {
+      "name": "피크민"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kids",
+    "fields": {
+      "name": "이준석"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "bigbangvip",
+    "fields": {
+      "name": "빅뱅 VIP"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "retrogame",
+    "fields": {
+      "name": "레트로게임기"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "digimontcg",
+    "fields": {
+      "name": "디지몬 TCG"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "miniaturegame",
+    "fields": {
+      "name": "미니어처게임"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "maplereboot",
+    "fields": {
+      "name": "메이플스토리 리부트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "agf",
+    "fields": {
+      "name": "AGF"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "ado",
+    "fields": {
+      "name": "아도(Ado)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nendoroid",
+    "fields": {
+      "name": "넨도로이드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "unitedapp",
+    "fields": {
+      "name": "맨체스터 유나이티드 앱"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "soconvallaria",
+    "fields": {
+      "name": "소드 오브 콘발라리아"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hlelol",
+    "fields": {
+      "name": "한화생명 LOL"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "csonline",
+    "fields": {
+      "name": "카운터스트라이크 온라인"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "oncehumankor",
+    "fields": {
+      "name": "원스휴먼"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "apistogramma",
+    "fields": {
+      "name": "아피스토그라마"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "moonbanggu",
+    "fields": {
+      "name": "문방구"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "rimworld",
+    "fields": {
+      "name": "림월드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "intp_mbti",
+    "fields": {
+      "name": "INTP"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hanavi",
+    "fields": {
+      "name": "하나비"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "asdf12",
+    "fields": {
+      "name": "무출산"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "diamondvalley",
+    "fields": {
+      "name": "다이아몬드 밸리"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "yavetwarch",
+    "fields": {
+      "name": "냥코"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "nouvellevague",
+    "fields": {
+      "name": "누벨바그"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "classicbaram",
+    "fields": {
+      "name": "옛날바람(메이플월드)"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "lurefishing",
+    "fields": {
+      "name": "루어낚시"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "firefighter",
+    "fields": {
+      "name": "소방"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "kanye",
+    "fields": {
+      "name": "칸예 웨스트"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hiddengoddess",
+    "fields": {
+      "name": "쿠베라"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "gersangm",
+    "fields": {
+      "name": "거상M"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "3kingdoms",
+    "fields": {
+      "name": "삼국지 전략판"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "mandb",
+    "fields": {
+      "name": "마운트 앤 블레이드"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "hikikomori",
+    "fields": {
+      "name": "은둔형 외톨이"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": "reading",
+    "fields": {
+      "name": "독서"
+    }
+  }
+]
