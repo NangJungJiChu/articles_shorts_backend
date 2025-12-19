@@ -2,7 +2,7 @@
 posts.json 파일의 이미지 표기를 마크다운 형식으로 변환하는 스크립트
 
 변환:
-  [IMAGE: /media/v2/<id>.png] → ![](/media/v2/<id>.png)
+  [IMAGE: /media/<id>.png] → ![](/media/<id>.png)
 """
 
 import json

@@ -79,7 +79,7 @@ class ImageUploadView(views.APIView):
             return Response({"error": "No image provided"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Create v2 directory if not exists
-        upload_dir = os.path.join(settings.MEDIA_ROOT, 'v2')
+        upload_dir = settings.MEDIA_ROOT
         os.makedirs(upload_dir, exist_ok=True)
 
         # Generate UUID filename
@@ -97,7 +97,7 @@ class ImageUploadView(views.APIView):
                 destination.write(chunk)
 
         # Return URL and ID
-        file_url = f"{settings.MEDIA_URL}v2/{filename}"
+        file_url = f"{settings.MEDIA_URL}{filename}"
         return Response({
             "id": file_id,
             "url": file_url
