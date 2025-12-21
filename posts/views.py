@@ -37,7 +37,7 @@ class PostPagination(PageNumberPagination):
 
 
 class PostListView(ListAPIView):
-    queryset = Post.objects.select_related('author', 'category').prefetch_related(
+    queryset = Post.objects.filter(embedding__isnull=False).select_related('author', 'category').prefetch_related(
         'like_users', 'comment_set', 'comment_set__author'
     ).order_by('-created_at')
     serializer_class = PostListSerializer
@@ -45,7 +45,7 @@ class PostListView(ListAPIView):
 
 class RecommendedPostListView(ListAPIView):
     # Randomly order posts to simulate recommendation system
-    queryset = Post.objects.select_related('author', 'category').prefetch_related(
+    queryset = Post.objects.filter(embedding__isnull=False).select_related('author', 'category').prefetch_related(
         'like_users', 'comment_set', 'comment_set__author'
     ).order_by('?')
     serializer_class = PostListSerializer

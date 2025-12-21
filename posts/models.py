@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from pgvector.django import VectorField
 
 class Category(models.Model):
     # field 컬럼 삭제!
@@ -19,6 +20,7 @@ class Post(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
     is_nsfw = models.BooleanField(default=False)
     is_profane = models.BooleanField(default=False)
+    embedding = VectorField(dimensions=768, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
