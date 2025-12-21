@@ -97,6 +97,8 @@ class PostListView(ListAPIView):
 from pgvector.django import CosineDistance
 from .utils import calculate_user_vector
 
+from django.db.models import Exists, OuterRef
+
 class RecommendedPostListView(ListAPIView):
     serializer_class = PostListSerializer
     pagination_class = PostPagination
@@ -105,12 +107,25 @@ class RecommendedPostListView(ListAPIView):
         # 1. User Personalized Recommendation
         if self.request.user.is_authenticated:
             user_vector = calculate_user_vector(self.request.user)
+            
+            # Subquery to check if user has interacted with the post
+            is_viewed_subquery = UserInteraction.objects.filter(
+                user=self.request.user,
+                post=OuterRef('pk')
+            )
+
+            queryset = Post.objects.filter(embedding__isnull=False) \
+                .annotate(is_viewed=Exists(is_viewed_subquery)) \
+                .select_related('author', 'category') \
+                .prefetch_related('like_users', 'comment_set', 'comment_set__author')
+
             if user_vector:
                 # Recommend posts closest to user_vector
-                return Post.objects.filter(embedding__isnull=False) \
-                    .order_by(CosineDistance('embedding', user_vector)) \
-                    .select_related('author', 'category') \
-                    .prefetch_related('like_users', 'comment_set', 'comment_set__author')
+                # Sort: Unseen (False) -> Seen (True), then by Distance (Ascending)
+                return queryset.order_by('is_viewed', CosineDistance('embedding', user_vector))
+            else:
+                # Fallback if no vector: Unseen first, then random/recent
+                 return queryset.order_by('is_viewed', '-created_at')
 
         # 2. Fallback: Random posts (only those with embeddings)
         return Post.objects.filter(embedding__isnull=False).select_related('author', 'category').prefetch_related(
