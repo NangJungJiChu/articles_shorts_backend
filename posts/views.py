@@ -18,7 +18,11 @@ from django.conf import settings
 from rest_framework import generics, views, status
 from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import CategorySerializer, PostListSerializer, CommentSerializer
-
+import boto3
+from botocore.exceptions import NoCredentialsError
+import traceback
+from PIL import Image
+from io import BytesIO
 
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all().order_by('name')
@@ -74,34 +78,87 @@ class ImageUploadView(views.APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, *args, **kwargs):
-        file_obj = request.FILES.get('image')
-        if not file_obj:
+        # Handle multiple files
+        files = request.FILES.getlist('image')
+        if not files:
             return Response({"error": "No image provided"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Create v2 directory if not exists
-        upload_dir = settings.MEDIA_ROOT
-        os.makedirs(upload_dir, exist_ok=True)
+        try:
+            s3 = boto3.client(
+                's3',
+                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                region_name=settings.AWS_S3_REGION_NAME
+            )
+        except Exception as e:
+            print(f"Boto3 Client Init Error: {e}")
+            return Response({"error": "AWS Credentials Error (See console)"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        # Generate UUID filename
-        ext = os.path.splitext(file_obj.name)[1]
-        if not ext:
-            ext = '.png'
+        results = []
+
+        import concurrent.futures
+
+        def process_and_upload(file_obj):
+            try:
+                # Force .png extension
+                ext = '.png'
+                file_id = str(uuid.uuid4())
+                filename = f"{file_id}{ext}"
+
+                # Seek to start if reusing file
+                if hasattr(file_obj, 'seek'):
+                    file_obj.seek(0)
+                
+                # 1. Open image using Pillow
+                image = Image.open(file_obj)
+                
+                # 2. Convert to RGBA (if not already)
+                if image.mode not in ('RGB', 'RGBA'):
+                    image = image.convert('RGBA')
+                
+                # 3. Save as PNG to memory buffer
+                buffer = BytesIO()
+                image.save(buffer, format="PNG")
+                buffer.seek(0)
+                
+                # 4. Upload buffer to S3
+                s3.upload_fileobj(
+                    buffer,
+                    settings.AWS_STORAGE_BUCKET_NAME,
+                    filename,
+                    ExtraArgs={
+                        "ContentType": "image/png"
+                    }
+                )
+
+                # Construct URL
+                file_url = f"https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.{settings.AWS_S3_REGION_NAME}.amazonaws.com/{filename}"
+                
+                return {
+                    "id": file_id,
+                    "url": file_url
+                }
+            except Exception as e:
+                print(f"Error processing file {file_obj.name}: {e}")
+                traceback.print_exc()
+                return None
+
+        # Use ThreadPoolExecutor to upload files in parallel
+        results = []
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+            # Map files to the helper function
+            future_results = list(executor.map(process_and_upload, files))
         
-        file_id = str(uuid.uuid4())
-        filename = f"{file_id}{ext}"
-        file_path = os.path.join(upload_dir, filename)
+        # Filter out None results (failed uploads)
+        results = [r for r in future_results if r is not None]
 
-        # Save file
-        with open(file_path, 'wb+') as destination:
-            for chunk in file_obj.chunks():
-                destination.write(chunk)
+        if not results:
+             return Response({"error": "Upload failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        # Return URL and ID
-        file_url = f"{settings.MEDIA_URL}{filename}"
-        return Response({
-            "id": file_id,
-            "url": file_url
-        }, status=status.HTTP_201_CREATED)
+        # Backward compatibility: if single file uploaded, return single object
+        
+        # If multiple, return list
+        return Response(results, status=status.HTTP_201_CREATED)
 
 
 class LikeToggleView(views.APIView):
