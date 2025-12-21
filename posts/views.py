@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, UserInteraction
+
 from django.contrib.auth import get_user_model # 유저 모델 가져오기
 from django.views.decorators.csrf import csrf_exempt # CSRF 면제 데코레이터
 import json
@@ -24,6 +25,56 @@ import traceback
 from PIL import Image
 from io import BytesIO
 
+class PostInteractionView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, pk=post_id)
+        user = request.user
+        
+        interaction_type = request.data.get('type', 'VIEW') # VIEW, LIKE, COMMENT
+        duration = int(request.data.get('duration', 0))
+
+        # Calculate Score
+        # Base logic: Duration / Length
+        # If LIKE/COMMENT, give a high fixed score or bonus
+        score = 0.0
+        
+        if interaction_type == 'VIEW':
+            content_len = len(post.content) if post.content else 100
+            if content_len == 0: content_len = 100
+            
+            # Read Rate: 0.0 ~ 1.0 (capped at 1.5 for re-reading)
+            read_rate = duration / (content_len / 5) # Assume 5 chars per sec approx? (Adjustable)
+            # Actually, user said: "content length" influence.
+            # Let's use simple ratio: duration / content_length * K
+            
+            # Example: 1000 chars. Average read speed ~ 1000/20 = 50 secs?
+            # Let's just use raw ratio for now and tune later.
+            # Safety: cap maximum score to avoid outliers
+            score = duration / max(content_len, 1) * 10 
+            score = min(score, 5.0) # Cap at 5 points
+
+        elif interaction_type == 'LIKE':
+            score = 5.0
+            duration = 0
+            
+        elif interaction_type == 'COMMENT':
+            score = 3.0
+            duration = 0
+
+        UserInteraction.objects.create(
+            user=user,
+            post=post,
+            interaction_type=interaction_type,
+            duration=duration,
+            score=score
+        )
+
+        return Response({'message': 'Log saved', 'score': score}, status=status.HTTP_201_CREATED)
+
+
+
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all().order_by('name')
     serializer_class = CategorySerializer
@@ -43,13 +94,28 @@ class PostListView(ListAPIView):
     serializer_class = PostListSerializer
     pagination_class = PostPagination
 
+from pgvector.django import CosineDistance
+from .utils import calculate_user_vector
+
 class RecommendedPostListView(ListAPIView):
-    # Randomly order posts to simulate recommendation system
-    queryset = Post.objects.filter(embedding__isnull=False).select_related('author', 'category').prefetch_related(
-        'like_users', 'comment_set', 'comment_set__author'
-    ).order_by('?')
     serializer_class = PostListSerializer
     pagination_class = PostPagination
+
+    def get_queryset(self):
+        # 1. User Personalized Recommendation
+        if self.request.user.is_authenticated:
+            user_vector = calculate_user_vector(self.request.user)
+            if user_vector:
+                # Recommend posts closest to user_vector
+                return Post.objects.filter(embedding__isnull=False) \
+                    .order_by(CosineDistance('embedding', user_vector)) \
+                    .select_related('author', 'category') \
+                    .prefetch_related('like_users', 'comment_set', 'comment_set__author')
+
+        # 2. Fallback: Random posts (only those with embeddings)
+        return Post.objects.filter(embedding__isnull=False).select_related('author', 'category').prefetch_related(
+            'like_users', 'comment_set', 'comment_set__author'
+        ).order_by('?')
 
 
 class MyPostListView(ListAPIView):

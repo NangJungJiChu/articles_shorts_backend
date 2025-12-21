@@ -20,6 +20,7 @@ urlpatterns = [
 
     # like toggle, comments
     path('<int:post_id>/like/', views.LikeToggleView.as_view(), name='post_like'),
+    path('<int:post_id>/interact/', views.PostInteractionView.as_view(), name='post_interact'),
     path('<int:post_id>/comments/', views.PostCommentView.as_view()),
 
     # search posts

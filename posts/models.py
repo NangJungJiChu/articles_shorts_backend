@@ -37,3 +37,23 @@ class Comment(models.Model):
 
     class Meta:
         db_table = 'posts_comment'
+
+class UserInteraction(models.Model):
+    INTERACTION_CHOICES = [
+        ('VIEW', 'View'),
+        ('LIKE', 'Like'),
+        ('COMMENT', 'Comment'),
+    ]
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    interaction_type = models.CharField(max_length=10, choices=INTERACTION_CHOICES)
+    duration = models.IntegerField(default=0)  # Seconds spent on the post
+    score = models.FloatField(default=0.0)     # Calculated relevance score
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['user', 'created_at']),
+        ]
