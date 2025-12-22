@@ -26,9 +26,24 @@ def calculate_user_vector(user, limit=50):
         weighted_vectors.append(embedding * weight)
         total_weight += weight
 
+    
     if total_weight == 0:
         return None
 
     # Calculate weighted average
     user_vector = np.sum(weighted_vectors, axis=0) / total_weight
-    return user_vector.tolist()
+    
+    # Save to User model
+    user.preference_vector = user_vector.tolist()
+    user.save(update_fields=['preference_vector'])
+    
+    return user.preference_vector
+
+def get_user_vector(user):
+    """
+    Get the user's preference vector.
+    """
+    if user.preference_vector is not None:
+        return user.preference_vector
+    # If not present (legacy/new), try to calculate
+    return calculate_user_vector(user)

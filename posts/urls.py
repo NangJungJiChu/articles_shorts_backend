@@ -9,7 +9,9 @@ urlpatterns = [
     path('', views.PostListView.as_view(), name='post_list'),
     
     # recommended post list
+    # recommended post list
     path('recommended/', views.RecommendedPostListView.as_view(), name='post_recommended'),
+    path('<int:post_id>/similar/', views.SimilarPostListView.as_view(), name='post_similar'),
 
     # My page APIs
     path('my/', views.MyPostListView.as_view(), name='my_post_list'),

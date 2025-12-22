@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .models import Post, Category, Comment, UserInteraction
+from .serializers import CategorySerializer, PostListSerializer, CommentSerializer
 
 from django.contrib.auth import get_user_model # 유저 모델 가져오기
 from django.views.decorators.csrf import csrf_exempt # CSRF 면제 데코레이터
@@ -18,12 +19,16 @@ import uuid
 from django.conf import settings
 from rest_framework import generics, views, status
 from rest_framework.parsers import MultiPartParser, FormParser
-from .serializers import CategorySerializer, PostListSerializer, CommentSerializer
 import boto3
 from botocore.exceptions import NoCredentialsError
 import traceback
 from PIL import Image
 from io import BytesIO
+import random
+from django.db.models import Exists, OuterRef
+from pgvector.django import CosineDistance
+from .utils import calculate_user_vector, get_user_vector
+
 
 class PostInteractionView(views.APIView):
     permission_classes = [IsAuthenticated]
@@ -41,20 +46,12 @@ class PostInteractionView(views.APIView):
         score = 0.0
         
         if interaction_type == 'VIEW':
-            content_len = len(post.content) if post.content else 100
-            if content_len == 0: content_len = 100
+            # Simple View: 1.0 point
+            # Bonus for dwell time: +0.1 per 5 seconds, max +1.0
+            score = 1.0
+            bonus = min((duration / 5.0) * 0.1, 1.0)
+            score += bonus
             
-            # Read Rate: 0.0 ~ 1.0 (capped at 1.5 for re-reading)
-            read_rate = duration / (content_len / 5) # Assume 5 chars per sec approx? (Adjustable)
-            # Actually, user said: "content length" influence.
-            # Let's use simple ratio: duration / content_length * K
-            
-            # Example: 1000 chars. Average read speed ~ 1000/20 = 50 secs?
-            # Let's just use raw ratio for now and tune later.
-            # Safety: cap maximum score to avoid outliers
-            score = duration / max(content_len, 1) * 10 
-            score = min(score, 5.0) # Cap at 5 points
-
         elif interaction_type == 'LIKE':
             score = 5.0
             duration = 0
@@ -70,6 +67,10 @@ class PostInteractionView(views.APIView):
             duration=duration,
             score=score
         )
+        
+        # Update User Profile Vector
+        from .utils import calculate_user_vector
+        calculate_user_vector(user)
 
         return Response({'message': 'Log saved', 'score': score}, status=status.HTTP_201_CREATED)
 
@@ -94,43 +95,138 @@ class PostListView(ListAPIView):
     serializer_class = PostListSerializer
     pagination_class = PostPagination
 
-from pgvector.django import CosineDistance
-from .utils import calculate_user_vector
 
-from django.db.models import Exists, OuterRef
+class RecommendedPostListView(views.APIView):
+    permission_classes = [IsAuthenticated]
 
-class RecommendedPostListView(ListAPIView):
+    def get(self, request):
+        user = request.user
+        
+        # --- Stage 1: Exclusion (Hard Filter) ---
+        # Exclude everything user has explicitly interacted with (View, Like, Comment)
+        viewed_ids = set(UserInteraction.objects.filter(user=user).values_list('post_id', flat=True))
+        
+        candidates = {} # Map post_id -> score
+        
+        # --- Stage 2: Candidate Generation (Retrieval) ---
+        
+        # Source A: Collaborative Filtering (Behavioral)
+        # "People like you also liked..."
+        if user.cf_latent_vector is not None:
+            # Find posts with similar latent vector
+            cf_posts = Post.objects.filter(cf_latent_vector__isnull=False) \
+                .exclude(id__in=viewed_ids) \
+                .annotate(distance=CosineDistance('cf_latent_vector', user.cf_latent_vector)) \
+                .order_by('distance')[:50]
+                
+            for p in cf_posts:
+                # Cosine Distance 0..2 => Similarity 1..-1
+                # Sim = 1 - Distance.
+                sim = 1.0 - p.distance
+                candidates[p.id] = {'post': p, 'cf_score': sim, 'content_score': 0, 'freshness': 0}
+
+        # Source B: Content-Based Filtering (Semantic)
+        # "You liked similar content..."
+        # Using existing utils logic to get semantic vector
+        user_content_vector = get_user_vector(user)
+        if user_content_vector is not None:
+             content_posts = Post.objects.filter(embedding__isnull=False) \
+                .exclude(id__in=viewed_ids) \
+                .annotate(distance=CosineDistance('embedding', user_content_vector)) \
+                .order_by('distance')[:50]
+             
+             for p in content_posts:
+                 sim = 1.0 - p.distance
+                 if p.id in candidates:
+                     candidates[p.id]['content_score'] = sim
+                 else:
+                     candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': sim, 'freshness': 0}
+        else:
+             # Cold Start: Categories
+             interested_categories = user.interested_categories.all()
+             if interested_categories.exists():
+                 cat_posts = Post.objects.filter(category__in=interested_categories) \
+                    .exclude(id__in=viewed_ids) \
+                    .order_by('-created_at')[:30]
+                 for p in cat_posts:
+                     if p.id not in candidates:
+                          candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0.5, 'freshness': 0}
+        
+        # Source C: Popular/Fresh (Diversity/Cold Start)
+        recent_posts = Post.objects.all() \
+            .exclude(id__in=viewed_ids) \
+            .order_by('-created_at')[:30]
+            
+        for p in recent_posts:
+             if p.id not in candidates:
+                 candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0, 'freshness': 0} # Freshness calc later
+
+        # --- Stage 3: Scoring & Ranking ---
+        
+        # Weights
+        # If user has CF vector, trust CF more. Else trust Content.
+        w_cf = 0.4
+        w_content = 0.4
+        w_fresh = 0.2
+        
+        if user.cf_latent_vector is None:
+            w_cf = 0
+            w_content = 0.7
+            w_fresh = 0.3
+            
+        import time
+        from datetime import datetime, timezone
+        now = datetime.now(timezone.utc)
+        
+        ranked_list = []
+        
+        for pid, data in candidates.items():
+            post = data['post']
+            
+            # Freshness Score (Exponential Decay)
+            days_old = (now - post.created_at).days
+            freshness = 1.0 / (1.0 + 0.1 * days_old)
+            
+            final_score = (w_cf * data['cf_score']) + \
+                          (w_content * data['content_score']) + \
+                          (w_fresh * freshness)
+                          
+            ranked_list.append((final_score, post))
+            
+        ranked_list.sort(key=lambda x: x[0], reverse=True)
+        
+        # --- Stage 4: Diversity (MMR - Simplified) ---
+        # For now, just take top N, but maybe shuffle top 10% slightly?
+        # Or simple Rule: Don't show 5 consecutive posts from same category.
+        
+        final_posts = [p for s, p in ranked_list]
+        
+        # Limit to 100 max
+        final_posts = final_posts[:100]
+
+        # Pagination
+        paginator = PostPagination()
+        page = paginator.paginate_queryset(final_posts, request)
+        serializer = PostListSerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+
+class SimilarPostListView(ListAPIView):
     serializer_class = PostListSerializer
     pagination_class = PostPagination
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # 1. User Personalized Recommendation
-        if self.request.user.is_authenticated:
-            user_vector = calculate_user_vector(self.request.user)
+        post_id = self.kwargs.get('post_id')
+        post = get_object_or_404(Post, pk=post_id)
+        
+        if not post.embedding:
+            return Post.objects.none()
             
-            # Subquery to check if user has interacted with the post
-            is_viewed_subquery = UserInteraction.objects.filter(
-                user=self.request.user,
-                post=OuterRef('pk')
-            )
-
-            queryset = Post.objects.filter(embedding__isnull=False) \
-                .annotate(is_viewed=Exists(is_viewed_subquery)) \
-                .select_related('author', 'category') \
-                .prefetch_related('like_users', 'comment_set', 'comment_set__author')
-
-            if user_vector:
-                # Recommend posts closest to user_vector
-                # Sort: Unseen (False) -> Seen (True), then by Distance (Ascending)
-                return queryset.order_by('is_viewed', CosineDistance('embedding', user_vector))
-            else:
-                # Fallback if no vector: Unseen first, then random/recent
-                 return queryset.order_by('is_viewed', '-created_at')
-
-        # 2. Fallback: Random posts (only those with embeddings)
-        return Post.objects.filter(embedding__isnull=False).select_related('author', 'category').prefetch_related(
-            'like_users', 'comment_set', 'comment_set__author'
-        ).order_by('?')
+        # Item-to-Item Similarity
+        return Post.objects.filter(embedding__isnull=False) \
+            .exclude(id=post.id) \
+            .order_by(CosineDistance('embedding', post.embedding))
 
 
 class MyPostListView(ListAPIView):

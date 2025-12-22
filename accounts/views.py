@@ -18,7 +18,24 @@ class UserDetailView(APIView):
 
     def get(self, request):
         return Response({
-            'username': request.user.username,
             'email': request.user.email,
             # Add other fields if needed
         })
+
+class UserOnboardingView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        category_ids = request.data.get('categories', [])
+        if not category_ids:
+            return Response({'error': 'Categories are required'}, status=400)
+        
+        # categories should be a list of IDs
+        # Clear existing and add new
+        request.user.interested_categories.clear()
+        
+        # Validating IDs is good practice, but for MVP assuming frontend sends valid IDs
+        # or we can filter valid ones locally.
+        request.user.interested_categories.add(*category_ids)
+        
+        return Response({'message': 'Onboarding completed'})
