@@ -349,3 +349,18 @@ class PostCreateView(views.APIView):
             'author': request.user.username
         }, status=status.HTTP_201_CREATED)
 
+
+class PostDeleteView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, post_id):
+        post = get_object_or_404(Post, pk=post_id)
+        
+        # Check if the requester is the author
+        if post.author != request.user:
+            return Response({'error': '삭제 권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+            
+        post.delete()
+        return Response({'message': '게시글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
+
+
