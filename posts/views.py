@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
-from .models import Post, Category, Comment, UserInteraction
+from .models import Post, Category, Comment, UserInteraction, Report
 from .serializers import CategorySerializer, PostListSerializer, CommentSerializer
 
 from django.contrib.auth import get_user_model # 유저 모델 가져오기
@@ -51,6 +51,10 @@ class PostInteractionView(views.APIView):
             score = 1.0
             bonus = min((duration / 5.0) * 0.1, 1.0)
             score += bonus
+        elif interaction_type == 'NOT_INTERESTED':
+            # Moderate negative signal for the topic
+            score = -5.0
+            duration = 0
         else:
             # Handle other types if necessary, or return if already handled by signals
             return Response({'message': 'Interaction type handled by signals or ignored'}, status=status.HTTP_200_OK)
@@ -68,6 +72,24 @@ class PostInteractionView(views.APIView):
         async_calculate_user_vector(user.id)
 
         return Response({'message': 'Log saved', 'score': score}, status=status.HTTP_201_CREATED)
+
+class ReportPostView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, pk=post_id)
+        content = request.data.get('content', '')
+        
+        if not content:
+            return Response({'error': 'Report content is required'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        Report.objects.create(
+            user=request.user,
+            post=post,
+            content=content
+        )
+        
+        return Response({'message': 'Report submitted successfully'}, status=status.HTTP_201_CREATED)
 
 
 
@@ -97,11 +119,13 @@ class RecommendedPostListView(views.APIView):
     def get(self, request):
         user = request.user
         
-        # 1. Exclusion (Hard Filter)
-        viewed_ids = self._get_viewed_ids(user)
+        # 1. Exclusion (Hard vs Soft)
+        reported_ids = self._get_reported_ids(user)
+        recent_viewed_ids = self._get_viewed_ids(user)
+        exclusion_ids = reported_ids | recent_viewed_ids
         
         # 2. Candidate Generation (Retrieval)
-        candidates = self._generate_candidates(user, viewed_ids)
+        candidates = self._generate_candidates(user, exclusion_ids)
         
         # 3. Scoring & Ranking
         ranked_posts = self._score_and_rank(user, candidates)
@@ -115,17 +139,29 @@ class RecommendedPostListView(views.APIView):
         serializer = PostListSerializer(page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-    def _get_viewed_ids(self, user):
-        return set(UserInteraction.objects.filter(user=user).values_list('post_id', flat=True))
+    def _get_reported_ids(self, user):
+        """Hard Exclusion: Never show reported posts again."""
+        return set(Report.objects.filter(user=user).values_list('post_id', flat=True))
 
-    def _generate_candidates(self, user, viewed_ids):
+    def _get_viewed_ids(self, user):
+        """Soft Exclusion: Avoid showing recently viewed posts (7 days window)."""
+        from django.utils import timezone
+        from datetime import timedelta
+        threshold = timezone.now() - timedelta(days=7)
+        
+        return set(UserInteraction.objects.filter(
+            user=user, 
+            created_at__gte=threshold
+        ).values_list('post_id', flat=True))
+
+    def _generate_candidates(self, user, exclusion_ids):
         candidates = {} # Map post_id -> score_data
         
         
         # Source A: Collaborative Filtering
         if user.cf_latent_vector is not None:
             cf_posts = Post.objects.filter(cf_latent_vector__isnull=False) \
-                .exclude(id__in=viewed_ids) \
+                .exclude(id__in=exclusion_ids) \
                 .annotate(distance=CosineDistance('cf_latent_vector', user.cf_latent_vector)) \
                 .order_by('distance')[:50]
                 
@@ -136,31 +172,31 @@ class RecommendedPostListView(views.APIView):
         # Source B: Content-Based Filtering
         user_content_vector = get_user_vector(user)
         if user_content_vector is not None:
-             content_posts = Post.objects.filter(embedding__isnull=False) \
-                .exclude(id__in=viewed_ids) \
+            content_posts = Post.objects.filter(embedding__isnull=False) \
+                .exclude(id__in=exclusion_ids) \
                 .annotate(distance=CosineDistance('embedding', user_content_vector)) \
                 .order_by('distance')[:50]
-             
-             for p in content_posts:
-                 sim = max(0, 1.0 - p.distance)
-                 if p.id in candidates:
-                     candidates[p.id]['content_score'] = sim
-                 else:
-                     candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': sim}
+            
+            for p in content_posts:
+                sim = max(0, 1.0 - p.distance)
+                if p.id in candidates:
+                    candidates[p.id]['content_score'] = sim
+                else:
+                    candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': sim}
         else:
-             # Cold Start: Categories
-             interested_categories = user.interested_categories.all()
-             if interested_categories.exists():
-                 cat_posts = Post.objects.filter(category__in=interested_categories) \
-                    .exclude(id__in=viewed_ids) \
-                    .order_by('-created_at')[:30]
-                 for p in cat_posts:
-                     if p.id not in candidates:
-                          candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0.5}
+            # Cold Start: Categories
+            interested_categories = user.interested_categories.all()
+            if interested_categories.exists():
+                cat_posts = Post.objects.filter(category__in=interested_categories) \
+                .exclude(id__in=exclusion_ids) \
+                .order_by('-created_at')[:30]
+                for p in cat_posts:
+                    if p.id not in candidates:
+                        candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0.5}
         
         # Source C: Popular/Fresh
         recent_posts = Post.objects.all() \
-            .exclude(id__in=viewed_ids) \
+            .exclude(id__in=exclusion_ids) \
             .order_by('-created_at')[:30]
             
         for p in recent_posts:

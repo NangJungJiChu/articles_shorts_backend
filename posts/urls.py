@@ -9,7 +9,6 @@ urlpatterns = [
     path('', views.PostListView.as_view(), name='post_list'),
     
     # recommended post list
-    # recommended post list
     path('recommended/', views.RecommendedPostListView.as_view(), name='post_recommended'),
     path('<int:post_id>/similar/', views.SimilarPostListView.as_view(), name='post_similar'),
 
@@ -23,6 +22,7 @@ urlpatterns = [
     # like toggle, comments
     path('<int:post_id>/like/', views.LikeToggleView.as_view(), name='post_like'),
     path('<int:post_id>/interact/', views.PostInteractionView.as_view(), name='post_interact'),
+    path('<int:post_id>/report/', views.ReportPostView.as_view(), name='post_report'),
     path('<int:post_id>/comments/', views.PostCommentView.as_view()),
 
     # search posts

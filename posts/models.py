@@ -44,11 +44,12 @@ class UserInteraction(models.Model):
         ('VIEW', 'View'),
         ('LIKE', 'Like'),
         ('COMMENT', 'Comment'),
+        ('NOT_INTERESTED', 'Not Interested'),
     ]
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    interaction_type = models.CharField(max_length=10, choices=INTERACTION_CHOICES)
+    interaction_type = models.CharField(max_length=20, choices=INTERACTION_CHOICES)
     duration = models.IntegerField(default=0)  # Seconds spent on the post
     score = models.FloatField(default=0.0)     # Calculated relevance score
     created_at = models.DateTimeField(auto_now_add=True)
@@ -58,3 +59,15 @@ class UserInteraction(models.Model):
         indexes = [
             models.Index(fields=['user', 'created_at']),
         ]
+
+class Report(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='reports')
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"Report by {self.user.username} on Post {self.post.id}"

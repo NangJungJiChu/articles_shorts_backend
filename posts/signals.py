@@ -3,16 +3,14 @@ import os
 import requests
 from io import BytesIO
 from PIL import Image
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 from django.conf import settings
-from .models import Post
+from .models import Post, Comment, UserInteraction
+from .utils import async_calculate_user_vector
 from sentence_transformers import SentenceTransformer
 from transformers import BlipProcessor, BlipForConditionalGeneration
 import logging
-from .models import Post, Comment, UserInteraction
-from .utils import async_calculate_user_vector
-from django.db.models.signals import post_save, m2m_changed
 
 logger = logging.getLogger(__name__)
 
