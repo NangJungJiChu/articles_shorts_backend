@@ -114,9 +114,13 @@ def handle_like_interaction(sender, instance, action, pk_set, **kwargs):
             )
             async_calculate_user_vector(user_id)
     elif action == "post_remove":
-        # Optional: update vector when like is removed? 
-        # For now, interactions are historical, so we don't delete them.
+        # Remove interaction if user unlikes
         for user_id in pk_set:
+            UserInteraction.objects.filter(
+                user_id=user_id,
+                post=instance,
+                interaction_type='LIKE'
+            ).delete()
             async_calculate_user_vector(user_id)
 
 @receiver(post_save, sender=Comment)
