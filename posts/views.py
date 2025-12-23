@@ -28,6 +28,9 @@ import random
 from django.db.models import Exists, OuterRef
 from pgvector.django import CosineDistance
 from .utils import calculate_user_vector, get_user_vector
+from .opensearch_client import OpenSearchClient
+from .bedrock_client import BedrockClient
+
 
 
 class PostInteractionView(views.APIView):
@@ -484,3 +487,45 @@ class PostDeleteView(views.APIView):
         return Response({'message': '게시글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
 
 
+class SemanticPostSearchView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        query = request.query_params.get('q', '')
+        if not query:
+            return Response({'error': '검색어(q)가 필요합니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # 1. Generate Query Embedding
+        import time
+        t0 = time.time()
+        bedrock_client = BedrockClient()
+        query_vector = bedrock_client.get_embedding(query)
+        t1 = time.time()
+        print(f"[Profiling] Bedrock embedding took: {t1 - t0:.4f}s")
+        
+        if not query_vector:
+             return Response({'error': '검색어 처리에 실패했습니다. (Embedding Error)'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # 2. Search OpenSearch
+        os_client = OpenSearchClient()
+        hits = os_client.search('posts', query_vector, k=10)
+        t2 = time.time()
+        print(f"[Profiling] OpenSearch search took: {t2 - t1:.4f}s")
+        print(f"[Profiling] Total search time: {t2 - t0:.4f}s")
+        
+        # 3. Format Results
+        results = []
+        for hit in hits:
+            source = hit['_source']
+            results.append({
+                'id': source.get('id'),
+                'title': source.get('title'),
+                'preview': source.get('content', '')[:200],
+                'author': source.get('author'),
+                'score': hit['_score']
+            })
+            
+        return Response({
+            'count': len(results),
+            'results': results
+        })
