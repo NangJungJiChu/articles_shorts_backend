@@ -18,6 +18,7 @@ class UserDetailView(APIView):
 
     def get(self, request):
         return Response({
+            'username': request.user.username,
             'email': request.user.email,
             # Add other fields if needed
         })
