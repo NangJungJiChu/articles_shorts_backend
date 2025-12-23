@@ -51,14 +51,9 @@ class PostInteractionView(views.APIView):
             score = 1.0
             bonus = min((duration / 5.0) * 0.1, 1.0)
             score += bonus
-            
-        elif interaction_type == 'LIKE':
-            score = 5.0
-            duration = 0
-            
-        elif interaction_type == 'COMMENT':
-            score = 3.0
-            duration = 0
+        else:
+            # Handle other types if necessary, or return if already handled by signals
+            return Response({'message': 'Interaction type handled by signals or ignored'}, status=status.HTTP_200_OK)
 
         UserInteraction.objects.create(
             user=user,
@@ -68,9 +63,9 @@ class PostInteractionView(views.APIView):
             score=score
         )
         
-        # Update User Profile Vector
-        from .utils import calculate_user_vector
-        calculate_user_vector(user)
+        # Update User Profile Vector Asynchronously
+        from .utils import async_calculate_user_vector
+        async_calculate_user_vector(user.id)
 
         return Response({'message': 'Log saved', 'score': score}, status=status.HTTP_201_CREATED)
 
@@ -102,32 +97,43 @@ class RecommendedPostListView(views.APIView):
     def get(self, request):
         user = request.user
         
-        # --- Stage 1: Exclusion (Hard Filter) ---
-        # Exclude everything user has explicitly interacted with (View, Like, Comment)
-        viewed_ids = set(UserInteraction.objects.filter(user=user).values_list('post_id', flat=True))
+        # 1. Exclusion (Hard Filter)
+        viewed_ids = self._get_viewed_ids(user)
         
-        candidates = {} # Map post_id -> score
+        # 2. Candidate Generation (Retrieval)
+        candidates = self._generate_candidates(user, viewed_ids)
         
-        # --- Stage 2: Candidate Generation (Retrieval) ---
+        # 3. Scoring & Ranking
+        ranked_posts = self._score_and_rank(user, candidates)
         
-        # Source A: Collaborative Filtering (Behavioral)
-        # "People like you also liked..."
+        # 4. Post-processing (Diversity & Limit)
+        final_posts = ranked_posts[:100]
+
+        # 5. Pagination
+        paginator = PostPagination()
+        page = paginator.paginate_queryset(final_posts, request)
+        serializer = PostListSerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
+
+    def _get_viewed_ids(self, user):
+        return set(UserInteraction.objects.filter(user=user).values_list('post_id', flat=True))
+
+    def _generate_candidates(self, user, viewed_ids):
+        candidates = {} # Map post_id -> score_data
+        
+        
+        # Source A: Collaborative Filtering
         if user.cf_latent_vector is not None:
-            # Find posts with similar latent vector
             cf_posts = Post.objects.filter(cf_latent_vector__isnull=False) \
                 .exclude(id__in=viewed_ids) \
                 .annotate(distance=CosineDistance('cf_latent_vector', user.cf_latent_vector)) \
                 .order_by('distance')[:50]
                 
             for p in cf_posts:
-                # Cosine Distance 0..2 => Similarity 1..-1
-                # Sim = 1 - Distance.
-                sim = 1.0 - p.distance
-                candidates[p.id] = {'post': p, 'cf_score': sim, 'content_score': 0, 'freshness': 0}
+                sim = max(0, 1.0 - p.distance)
+                candidates[p.id] = {'post': p, 'cf_score': sim, 'content_score': 0}
 
-        # Source B: Content-Based Filtering (Semantic)
-        # "You liked similar content..."
-        # Using existing utils logic to get semantic vector
+        # Source B: Content-Based Filtering
         user_content_vector = get_user_vector(user)
         if user_content_vector is not None:
              content_posts = Post.objects.filter(embedding__isnull=False) \
@@ -136,11 +142,11 @@ class RecommendedPostListView(views.APIView):
                 .order_by('distance')[:50]
              
              for p in content_posts:
-                 sim = 1.0 - p.distance
+                 sim = max(0, 1.0 - p.distance)
                  if p.id in candidates:
                      candidates[p.id]['content_score'] = sim
                  else:
-                     candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': sim, 'freshness': 0}
+                     candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': sim}
         else:
              # Cold Start: Categories
              interested_categories = user.interested_categories.all()
@@ -150,36 +156,32 @@ class RecommendedPostListView(views.APIView):
                     .order_by('-created_at')[:30]
                  for p in cat_posts:
                      if p.id not in candidates:
-                          candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0.5, 'freshness': 0}
+                          candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0.5}
         
-        # Source C: Popular/Fresh (Diversity/Cold Start)
+        # Source C: Popular/Fresh
         recent_posts = Post.objects.all() \
             .exclude(id__in=viewed_ids) \
             .order_by('-created_at')[:30]
             
         for p in recent_posts:
              if p.id not in candidates:
-                 candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0, 'freshness': 0} # Freshness calc later
+                 candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0}
 
-        # --- Stage 3: Scoring & Ranking ---
+        return candidates
+
+    def _score_and_rank(self, user, candidates):
+        from datetime import datetime, timezone
+        now = datetime.now(timezone.utc)
         
-        # Weights
-        # If user has CF vector, trust CF more. Else trust Content.
+        # Adaptive Weights
         w_cf = 0.4
         w_content = 0.4
         w_fresh = 0.2
         
         if user.cf_latent_vector is None:
-            w_cf = 0
-            w_content = 0.7
-            w_fresh = 0.3
+            w_cf, w_content, w_fresh = 0.0, 0.7, 0.3
             
-        import time
-        from datetime import datetime, timezone
-        now = datetime.now(timezone.utc)
-        
         ranked_list = []
-        
         for pid, data in candidates.items():
             post = data['post']
             
@@ -194,21 +196,7 @@ class RecommendedPostListView(views.APIView):
             ranked_list.append((final_score, post))
             
         ranked_list.sort(key=lambda x: x[0], reverse=True)
-        
-        # --- Stage 4: Diversity (MMR - Simplified) ---
-        # For now, just take top N, but maybe shuffle top 10% slightly?
-        # Or simple Rule: Don't show 5 consecutive posts from same category.
-        
-        final_posts = [p for s, p in ranked_list]
-        
-        # Limit to 100 max
-        final_posts = final_posts[:100]
-
-        # Pagination
-        paginator = PostPagination()
-        page = paginator.paginate_queryset(final_posts, request)
-        serializer = PostListSerializer(page, many=True)
-        return paginator.get_paginated_response(serializer.data)
+        return [p for s, p in ranked_list]
 
 
 class SimilarPostListView(ListAPIView):

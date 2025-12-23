@@ -10,6 +10,9 @@ from .models import Post
 from sentence_transformers import SentenceTransformer
 from transformers import BlipProcessor, BlipForConditionalGeneration
 import logging
+from .models import Post, Comment, UserInteraction
+from .utils import async_calculate_user_vector
+from django.db.models.signals import post_save, m2m_changed
 
 logger = logging.getLogger(__name__)
 
@@ -97,3 +100,37 @@ def handle_post_embedding(sender, instance, created, **kwargs):
         logger.info(f"Generated embedding for Post {instance.pk} (with {len(captions)} captions)")
     except Exception as e:
         logger.error(f"Error generating embedding for Post {instance.pk}: {e}")
+
+@receiver(m2m_changed, sender=Post.like_users.through)
+def handle_like_interaction(sender, instance, action, pk_set, **kwargs):
+    """
+    Record an interaction when a user likes/unlikes a post.
+    """
+    if action == "post_add":
+        for user_id in pk_set:
+            UserInteraction.objects.create(
+                user_id=user_id,
+                post=instance,
+                interaction_type='LIKE',
+                score=5.0
+            )
+            async_calculate_user_vector(user_id)
+    elif action == "post_remove":
+        # Optional: update vector when like is removed? 
+        # For now, interactions are historical, so we don't delete them.
+        for user_id in pk_set:
+            async_calculate_user_vector(user_id)
+
+@receiver(post_save, sender=Comment)
+def handle_comment_interaction(sender, instance, created, **kwargs):
+    """
+    Record an interaction when a user leaves a comment.
+    """
+    if created:
+        UserInteraction.objects.create(
+            user=instance.author,
+            post=instance.post,
+            interaction_type='COMMENT',
+            score=3.0
+        )
+        async_calculate_user_vector(instance.author_id)
