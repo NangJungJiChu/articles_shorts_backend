@@ -27,6 +27,7 @@ urlpatterns = [
 
     # search posts
     path('search-posts/', views.PostSearchView.as_view()),
+    path('search/semantic/', views.SemanticPostSearchView.as_view(), name='post_search_semantic'),
 
     # post detail
     path('detail/<int:post_id>/', views.PostDetailView.as_view()),
