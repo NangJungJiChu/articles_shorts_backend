@@ -140,50 +140,6 @@ def handle_comment_interaction(sender, instance, created, **kwargs):
         )
         async_calculate_user_vector(instance.author_id)
 
-@receiver(post_save, sender=Post)
-def sync_post_to_opensearch(sender, instance, created, **kwargs):
-    """
-    Sync post to OpenSearch when saved.
-    Generates Bedrock embedding and indexes the document.
-    Independent of DB embedding logic.
-    """
-    try:
-        os_client = OpenSearchClient()
-        os_client.create_index_if_not_exists() # Ensure index exists
-        
-        bedrock_client = BedrockClient()
-        
-        # 1. Prepare text
-        content = instance.content or ""
-        pure_text = re.sub(r'!\[.*?\]\(.*?\)', '', content)
-        combined_text = f"{instance.title} {pure_text}".strip()
-        
-        if not combined_text:
-            return
-
-        # 2. Generate Embedding
-        vector = bedrock_client.get_embedding(combined_text)
-        
-        if not vector:
-            logger.warning(f"Failed to generate Bedrock embedding for Post {instance.pk}")
-            return
-
-        # 3. Index to OpenSearch
-        doc = {
-            "id": str(instance.pk),
-            "title": instance.title,
-            "content": pure_text[:1000], 
-            "author": instance.author.username,
-            "created_at": instance.created_at.isoformat(),
-            "embedding": vector
-        }
-        
-        os_client.index_document('posts', str(instance.pk), doc)
-        logger.info(f"Synced Post {instance.pk} to OpenSearch")
-        
-    except Exception as e:
-        logger.error(f"Error syncing Post {instance.pk} to OpenSearch: {e}")
-
 from django.db.models.signals import post_delete 
 @receiver(post_delete, sender=Post)
 def delete_post_from_opensearch(sender, instance, **kwargs):
