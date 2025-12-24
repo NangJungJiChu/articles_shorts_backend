@@ -248,13 +248,6 @@ class RecommendedPostListView(views.APIView):
 
             ranked_list.append((final_score, post))
             
-            # Add Freshness decay part (optional, keeping it small)
-            # days_old = time_diff.days
-            # freshness = 1.0 / (1.0 + 0.1 * days_old)
-            # final_score += (w_fresh * freshness)
-
-            ranked_list.append((final_score, post))
-            
         ranked_list.sort(key=lambda x: x[0], reverse=True)
         return [p for s, p in ranked_list]
 
