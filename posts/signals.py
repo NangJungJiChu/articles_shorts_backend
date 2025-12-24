@@ -151,3 +151,47 @@ def delete_post_from_opensearch(sender, instance, **kwargs):
     except Exception as e:
         logger.error(f"Error deleting Post {instance.pk} from OpenSearch: {e}")
 
+
+@receiver(post_delete, sender=Comment)
+def handle_comment_deletion(sender, instance, **kwargs):
+    """
+    Remove interaction when a comment is deleted.
+    Tries to find the interaction created around the same time.
+    """
+    try:
+        # Define a time window to match the interaction (e.g., +/- 2 seconds)
+        from datetime import timedelta
+        # Ensure instance.created_at is not null
+        if not instance.created_at:
+            return
+
+        time_threshold = timedelta(seconds=5) 
+        min_time = instance.created_at - time_threshold
+        max_time = instance.created_at + time_threshold
+
+        # Find matching interaction
+        # We order by created_at to find the closest one
+        interactions = UserInteraction.objects.filter(
+            user=instance.author,
+            post=instance.post,
+            interaction_type='COMMENT',
+            created_at__range=(min_time, max_time)
+        )
+        
+        # If multiple found, pick the one closest in time
+        closest_interaction = None
+        min_diff = None
+
+        for interaction in interactions:
+            diff = abs((interaction.created_at - instance.created_at).total_seconds())
+            if min_diff is None or diff < min_diff:
+                min_diff = diff
+                closest_interaction = interaction
+
+        if closest_interaction:
+            closest_interaction.delete()
+            async_calculate_user_vector(instance.author.id)
+            logger.info(f"Deleted interaction for Comment {instance.id}")
+            
+    except Exception as e:
+        logger.error(f"Error handling comment deletion for Comment {instance.id}: {e}")

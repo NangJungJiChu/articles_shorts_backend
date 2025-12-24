@@ -123,15 +123,22 @@ class RecommendedPostListView(views.APIView):
         user = request.user
         
         # 1. Exclusion (Hard vs Soft)
+        # Reported posts are HARD excluded (never show).
         reported_ids = self._get_reported_ids(user)
-        recent_viewed_ids = self._get_viewed_ids(user)
-        exclusion_ids = reported_ids | recent_viewed_ids
+        
+        # Viewed posts are NOT excluded from candidates, but used for ranking penalties.
+        # We specifically track "Recently Viewed" (< 1 hour) for heavy penalty.
+        short_term_viewed_ids = self._get_short_term_viewed_ids(user)
+        
+        # Hard Exclusion for Candidate Generation
+        exclusion_ids = reported_ids
         
         # 2. Candidate Generation (Retrieval)
+        # We pass exclusion_ids which only contains reported posts now.
         candidates = self._generate_candidates(user, exclusion_ids)
         
         # 3. Scoring & Ranking
-        ranked_posts = self._score_and_rank(user, candidates)
+        ranked_posts = self._score_and_rank(user, candidates, short_term_viewed_ids)
         
         # 4. Post-processing (Diversity & Limit)
         final_posts = ranked_posts[:100]
@@ -146,20 +153,20 @@ class RecommendedPostListView(views.APIView):
         """Hard Exclusion: Never show reported posts again."""
         return set(Report.objects.filter(user=user).values_list('post_id', flat=True))
 
-    def _get_viewed_ids(self, user):
-        """Soft Exclusion: Avoid showing recently viewed posts (7 days window)."""
+    def _get_short_term_viewed_ids(self, user):
+        """Identify posts viewed within the last 1 hour."""
         from django.utils import timezone
         from datetime import timedelta
-        threshold = timezone.now() - timedelta(days=7)
+        threshold = timezone.now() - timedelta(hours=1)
         
         return set(UserInteraction.objects.filter(
             user=user, 
-            created_at__gte=threshold
+            created_at__gte=threshold,
+            interaction_type='VIEW'
         ).values_list('post_id', flat=True))
 
     def _generate_candidates(self, user, exclusion_ids):
         candidates = {} # Map post_id -> score_data
-        
         
         # Source A: Collaborative Filtering
         if user.cf_latent_vector is not None:
@@ -198,9 +205,10 @@ class RecommendedPostListView(views.APIView):
                         candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0.5}
         
         # Source C: Popular/Fresh
+        # Fetch more candidates to ensure we have enough even if we penalize seen ones
         recent_posts = Post.objects.all() \
             .exclude(id__in=exclusion_ids) \
-            .order_by('-created_at')[:30]
+            .order_by('-created_at')[:50]
             
         for p in recent_posts:
              if p.id not in candidates:
@@ -208,8 +216,8 @@ class RecommendedPostListView(views.APIView):
 
         return candidates
 
-    def _score_and_rank(self, user, candidates):
-        from datetime import datetime, timezone
+    def _score_and_rank(self, user, candidates, short_term_viewed_ids):
+        from datetime import datetime, timezone, timedelta
         now = datetime.now(timezone.utc)
         
         # Adaptive Weights
@@ -224,14 +232,28 @@ class RecommendedPostListView(views.APIView):
         for pid, data in candidates.items():
             post = data['post']
             
-            # Freshness Score (Exponential Decay)
-            days_old = (now - post.created_at).days
-            freshness = 1.0 / (1.0 + 0.1 * days_old)
-            
+            # Base Score
             final_score = (w_cf * data['cf_score']) + \
-                          (w_content * data['content_score']) + \
-                          (w_fresh * freshness)
-                          
+                          (w_content * data['content_score'])
+
+            # Freshness Boost (24-hour rule)
+            # If created within 24 hours, give a multiplier boost
+            time_diff = now - post.created_at
+            if time_diff < timedelta(hours=24):
+                # Boost!
+                final_score += 0.2 # Additive boost or multiplier
+                final_score *= 1.2 # Multiplier boost
+            
+            # Interaction Penalty (1-hour rule)
+            # If seen within 1 hour, penalize heavily
+            if pid in short_term_viewed_ids:
+                final_score *= 0.01 # 99% reduction
+            
+            # Add Freshness decay part (optional, keeping it small)
+            # days_old = time_diff.days
+            # freshness = 1.0 / (1.0 + 0.1 * days_old)
+            # final_score += (w_fresh * freshness)
+
             ranked_list.append((final_score, post))
             
         ranked_list.sort(key=lambda x: x[0], reverse=True)
