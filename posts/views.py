@@ -428,6 +428,18 @@ class PostCommentView(views.APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+
+class CommentDeleteView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, comment_id):
+        comment = get_object_or_404(Comment, pk=comment_id)
+        if comment.author != request.user:
+            return Response({'error': '삭제 권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+        comment.delete()
+        return Response({'message': '댓글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
+
+
 class PostSearchView(views.APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):

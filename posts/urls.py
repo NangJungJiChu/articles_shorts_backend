@@ -37,4 +37,6 @@ urlpatterns = [
     
     # delete post
     path('delete/<int:post_id>/', views.PostDeleteView.as_view()),
+    # delete comment
+    path('comments/<int:comment_id>/', views.CommentDeleteView.as_view()),
 ]
