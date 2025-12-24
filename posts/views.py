@@ -131,14 +131,14 @@ class RecommendedPostListView(views.APIView):
         short_term_viewed_ids = self._get_short_term_viewed_ids(user)
         
         # Hard Exclusion for Candidate Generation
-        exclusion_ids = reported_ids
+        exclusion_ids = reported_ids | short_term_viewed_ids
         
         # 2. Candidate Generation (Retrieval)
         # We pass exclusion_ids which only contains reported posts now.
         candidates = self._generate_candidates(user, exclusion_ids)
         
         # 3. Scoring & Ranking
-        ranked_posts = self._score_and_rank(user, candidates, short_term_viewed_ids)
+        ranked_posts = self._score_and_rank(user, candidates)
         
         # 4. Post-processing (Diversity & Limit)
         final_posts = ranked_posts[:100]
@@ -216,7 +216,7 @@ class RecommendedPostListView(views.APIView):
 
         return candidates
 
-    def _score_and_rank(self, user, candidates, short_term_viewed_ids):
+    def _score_and_rank(self, user, candidates):
         from datetime import datetime, timezone, timedelta
         now = datetime.now(timezone.utc)
         
@@ -244,10 +244,9 @@ class RecommendedPostListView(views.APIView):
                 final_score += 0.2 # Additive boost or multiplier
                 final_score *= 1.2 # Multiplier boost
             
-            # Interaction Penalty (1-hour rule)
-            # If seen within 1 hour, penalize heavily
-            if pid in short_term_viewed_ids:
-                final_score *= 0.01 # 99% reduction
+            # Interaction Penalty REMOVED (Hard Exclusion applied in get method)
+
+            ranked_list.append((final_score, post))
             
             # Add Freshness decay part (optional, keeping it small)
             # days_old = time_diff.days
