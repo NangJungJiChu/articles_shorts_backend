@@ -10,14 +10,16 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     author_username = serializers.CharField(source='author.username', read_only=True)
+    author_profile_image = serializers.ImageField(source='author.profile_img', read_only=True)
 
     class Meta:
         model = Comment
-        fields = ['id', 'content', 'author_username', 'created_at']
+        fields = ['id', 'content', 'author_username', 'author_profile_image', 'created_at']
 
 
 class PostListSerializer(serializers.ModelSerializer):
     author_username = serializers.CharField(source='author.username', read_only=True)
+    author_profile_image = serializers.ImageField(source='author.profile_img', read_only=True)
     category_name = serializers.CharField(source='category.name', read_only=True)
     like_count = serializers.IntegerField(source='like_users.count', read_only=True)
     comments = CommentSerializer(source='comment_set', many=True, read_only=True)
@@ -30,6 +32,7 @@ class PostListSerializer(serializers.ModelSerializer):
             'title',
             'content',
             'author_username',
+            'author_profile_image',
             'category',
             'category_name',
             'is_nsfw',
