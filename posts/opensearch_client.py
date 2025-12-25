@@ -15,20 +15,22 @@ class OpenSearchClient:
         return cls._instance
 
     def _init_client(self):
-        OPENSEARCH_HOST = os.environ.get('OPENSEARCH_HOST', 'localhost')
+        OPENSEARCH_HOST = os.environ.get('OPENSEARCH_HOST', '127.0.0.1')
         OPENSEARCH_PORT = int(os.environ.get('OPENSEARCH_PORT', 9200))
         OPENSEARCH_USER = os.environ.get('OPENSEARCH_USER', '')
         OPENSEARCH_PASSWORD = os.environ.get('OPENSEARCH_PASSWORD', '')
 
         try:
+            auth = (OPENSEARCH_USER, OPENSEARCH_PASSWORD)
             self.client = OpenSearch(
-                hosts=[{'host': host, 'port': port}],
+                hosts=[{'host': OPENSEARCH_HOST, 'port': OPENSEARCH_PORT}],
                 http_auth=auth,
                 use_ssl=True,
                 verify_certs=False, # For local dev with self-signed certs
                 ssl_assert_hostname=False,
                 ssl_show_warn=False,
-                connection_class=RequestsHttpConnection
+                connection_class=RequestsHttpConnection,
+                timeout=30
             )
             logger.info("OpenSearch client initialized")
         except Exception as e:
@@ -103,3 +105,9 @@ class OpenSearchClient:
         except Exception as e:
             logger.error(f"OpenSearch search failed: {e}")
             return []
+
+    def search_posts(self, query_vector, size=10):
+        """
+        Convenience method to search the 'posts' index.
+        """
+        return self.search('posts', query_vector, k=size)
