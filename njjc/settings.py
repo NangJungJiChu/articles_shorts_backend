@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-f+-lb0=#7#36f_wh13tdy3kq=yyyqpf)iluf+cqsd3j2jn*0h@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -179,3 +179,8 @@ Q_CLUSTER = {
     'label': 'Django Q',
     'orm': 'default',  # Use Django's ORM as the broker
 }
+
+# Kakao OAuth
+KAKAO_REST_API_KEY = os.environ.get('KAKAO_REST_API_KEY')
+KAKAO_REDIRECT_URI = os.environ.get('KAKAO_REDIRECT_URI', 'http://localhost:8000/accounts/api/kakao/callback/')
+KAKAO_FRONTEND_REDIRECT_URI = os.environ.get('KAKAO_FRONTEND_REDIRECT_URI', 'http://localhost:5173/profile')

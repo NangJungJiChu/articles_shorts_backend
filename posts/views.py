@@ -109,11 +109,20 @@ class PostPagination(PageNumberPagination):
 
 
 class PostListView(ListAPIView):
-    queryset = Post.objects.filter(embedding__isnull=False).select_related('author', 'category').prefetch_related(
-        'like_users', 'comment_set', 'comment_set__author'
-    ).order_by('-created_at')
     serializer_class = PostListSerializer
     pagination_class = PostPagination
+
+    def get_queryset(self):
+        user = self.request.user
+        qs = Post.objects.filter(embedding__isnull=False).select_related('author', 'category').prefetch_related(
+            'like_users', 'comment_set', 'comment_set__author'
+        )
+        
+        # If user is not verified, hide NSFW and profane content
+        if not (user.is_authenticated and user.is_pass_verified):
+            qs = qs.exclude(is_nsfw=True).exclude(is_profane=True)
+            
+        return qs.order_by('-created_at')
 
 
 class RecommendedPostListView(views.APIView):
@@ -204,15 +213,14 @@ class RecommendedPostListView(views.APIView):
                     if p.id not in candidates:
                         candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0.5}
         
-        # Source C: Popular/Fresh
-        # Fetch more candidates to ensure we have enough even if we penalize seen ones
-        recent_posts = Post.objects.all() \
-            .exclude(id__in=exclusion_ids) \
-            .order_by('-created_at')[:50]
-            
-        for p in recent_posts:
-             if p.id not in candidates:
-                 candidates[p.id] = {'post': p, 'cf_score': 0, 'content_score': 0}
+        # Final Filtering: NSFW/Profane removal for unverified users
+        if not user.is_pass_verified:
+            filtered_candidates = {}
+            for pid, data in candidates.items():
+                p = data['post']
+                if not (p.is_nsfw or p.is_profane):
+                    filtered_candidates[pid] = data
+            return filtered_candidates
 
         return candidates
 
@@ -257,17 +265,48 @@ class SimilarPostListView(ListAPIView):
     pagination_class = PostPagination
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        post_id = self.kwargs.get('post_id')
-        post = get_object_or_404(Post, pk=post_id)
-        
-        if not post.embedding:
-            return Post.objects.none()
+    def get(self, request, post_id):
+        try:
+            # 1. Get the target post
+            post = get_object_or_404(Post, pk=post_id)
             
-        # Item-to-Item Similarity
-        return Post.objects.filter(embedding__isnull=False) \
-            .exclude(id=post.id) \
-            .order_by(CosineDistance('embedding', post.embedding))
+            # 2. Generate embedding for the target post
+            # We can use the combined title + content as our query
+            combined_text = f"{post.title} {post.content}"[:10000]
+            
+            bedrock_client = BedrockClient()
+            query_vector = bedrock_client.get_embedding(combined_text)
+            
+            if not query_vector:
+                return Response({'results': []})
+            
+            # 3. Search OpenSearch
+            os_client = OpenSearchClient()
+            # We want similar posts, excluding the current one
+            hits = os_client.search_posts(query_vector, size=6)
+            
+            # 4. Format Results (limiting to those that are not the current post)
+            results = []
+            for hit in hits:
+                source = hit['_source']
+                # Skip the current post itself
+                if str(source.get('id')) == str(post.id):
+                    continue
+                
+                results.append({
+                    'id': source.get('id'),
+                    'title': source.get('title'),
+                    'preview': source.get('content', '')[:150],
+                    'author_username': source.get('author', 'unknown'),
+                    'score': hit['_score']
+                })
+            
+            # Limit to top 5 similar
+            return Response({'results': results[:5]})
+            
+        except Exception as e:
+            logger.error(f"Error in SimilarPostListView: {e}")
+            return Response({'error': str(e)}, status=500)
 
 
 class MyPostListView(ListAPIView):
@@ -460,6 +499,14 @@ class PostDetailView(views.APIView):
     def get(self, request, post_id):
         # 게시글 상세 조회 (없으면 404)
         post = get_object_or_404(Post, pk=post_id)
+        
+        # NSFW Protection
+        if (post.is_nsfw or post.is_profane) and not request.user.is_pass_verified:
+            return Response(
+                {"error": "이 게시물은 성인 인증(PASS)이 필요합니다."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+            
         serializer = PostListSerializer(post, context={'request': request})
         return Response(serializer.data)
 
@@ -472,6 +519,8 @@ class PostCreateView(views.APIView):
         title = request.data.get('title')
         body = request.data.get('body')
         category_id = request.data.get('category', 'mildlyinteresting')
+        is_nsfw = request.data.get('is_nsfw', False)
+        is_profane = request.data.get('is_profane', False)
 
         if not title or not body:
             return Response({'error': '제목과 본문은 필수입니다.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -481,7 +530,9 @@ class PostCreateView(views.APIView):
             title=title,
             content=body,
             category_id=category_id,
-            author=request.user 
+            author=request.user,
+            is_nsfw=is_nsfw,
+            is_profane=is_profane
         )
 
         return Response({
