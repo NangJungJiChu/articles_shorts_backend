@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-f+-lb0=#7#36f_wh13tdy3kq=yyyqpf)iluf+cqsd3j2jn*0h@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,7 +60,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -156,6 +156,7 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'njjc-media'
 AWS_S3_REGION_NAME = 'ap-northeast-2'
+BEDROCK_REGION = os.environ.get('BEDROCK_REGION', 'ap-northeast-2')
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
 
 # For simple usage in views without full django-storages backend swap, 
@@ -178,3 +179,8 @@ Q_CLUSTER = {
     'label': 'Django Q',
     'orm': 'default',  # Use Django's ORM as the broker
 }
+
+# Kakao OAuth
+KAKAO_REST_API_KEY = os.environ.get('KAKAO_REST_API_KEY')
+KAKAO_REDIRECT_URI = os.environ.get('KAKAO_REDIRECT_URI', 'http://localhost:8000/accounts/api/kakao/callback/')
+KAKAO_FRONTEND_REDIRECT_URI = os.environ.get('KAKAO_FRONTEND_REDIRECT_URI', 'http://localhost:5173/profile')

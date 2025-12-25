@@ -36,6 +36,7 @@ class PostListSerializer(serializers.ModelSerializer):
             'category',
             'category_name',
             'is_nsfw',
+            'is_profane',
             'created_at',
             'like_count',
             'comments',

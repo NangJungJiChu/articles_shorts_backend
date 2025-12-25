@@ -11,6 +11,7 @@ class User(AbstractUser):
     # storage needs to be a callable or instance, string reference not supported directly like this in older django or dependent on config
     # Actually Django docs say "A storage object or a callable that returns a storage object."
     profile_img = models.ImageField(upload_to='profile_images/', storage=ProfileImageStorage(), null=True, blank=True)
+    is_pass_verified = models.BooleanField(default=False)
     
     # Recommendation System Fields
     preference_vector = VectorField(dimensions=768, null=True, blank=True) # Content-Based (SBERT)

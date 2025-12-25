@@ -17,26 +17,36 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Load models globally
-try:
-    embed_model = SentenceTransformer('jhgan/ko-sroberta-multitask')
-except Exception as e:
-    logger.error(f"Failed to load SentenceTransformer model: {e}")
-    embed_model = None
+# Models will be lazy-loaded to prevent blocking startup
+_embed_model = None
+_caption_processor = None
+_caption_model = None
 
-try:
-    # Load BLIP for image captioning
-    caption_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
-    caption_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
-except Exception as e:
-    logger.error(f"Failed to load BLIP model: {e}")
-    caption_processor = None
-    caption_model = None
+def get_embed_model():
+    global _embed_model
+    if _embed_model is None:
+        try:
+            logger.info("Loading SentenceTransformer model...")
+            from sentence_transformers import SentenceTransformer
+            _embed_model = SentenceTransformer('jhgan/ko-sroberta-multitask')
+        except Exception as e:
+            logger.error(f"Failed to load SentenceTransformer model: {e}")
+    return _embed_model
+
+def get_caption_models():
+    global _caption_processor, _caption_model
+    if _caption_model is None or _caption_processor is None:
+        try:
+            logger.info("Loading BLIP models...")
+            from transformers import BlipProcessor, BlipForConditionalGeneration
+            _caption_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+            _caption_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
+        except Exception as e:
+            logger.error(f"Failed to load BLIP model: {e}")
+    return _caption_processor, _caption_model
 
 def generate_image_caption(image_url):
-    """
-    Generate caption for an image URL (S3).
-    """
+    caption_processor, caption_model = get_caption_models()
     if not caption_model or not caption_processor:
         return ""
     
@@ -60,6 +70,7 @@ def handle_post_embedding(sender, instance, created, **kwargs):
     Generate embedding for the post content when saved.
     Includes image captions if images are present (S3 supported).
     """
+    embed_model = get_embed_model()
     if not embed_model:
         logger.warning("Embedding model not loaded. Skipping embedding generation.")
         return
@@ -93,14 +104,32 @@ def handle_post_embedding(sender, instance, created, **kwargs):
         return
 
     try:
-        # 4. Generate embedding
+        # 4. Generate embedding for pgvector (SentenceTransformer)
         vector = embed_model.encode(combined_text).tolist()
 
         # 5. Update without triggering signals again
         Post.objects.filter(pk=instance.pk).update(embedding=vector)
-        logger.info(f"Generated embedding for Post {instance.pk} (with {len(captions)} captions)")
+        logger.info(f"Generated pgvector embedding for Post {instance.pk}")
+
+        # 6. Index to OpenSearch (using Bedrock)
+        bedrock_client = BedrockClient()
+        os_embedding = bedrock_client.get_embedding(combined_text)
+        if os_embedding:
+            os_client = OpenSearchClient()
+            doc = {
+                'id': str(instance.id),
+                'title': instance.title,
+                'content': instance.content,
+                'author': instance.author.username if instance.author else 'unknown',
+                'embedding': os_embedding
+            }
+            os_client.index_document('posts', str(instance.id), doc)
+            logger.info(f"Indexed Post {instance.pk} to OpenSearch")
+        else:
+            logger.error(f"Failed to generate Bedrock embedding for Post {instance.pk}")
+
     except Exception as e:
-        logger.error(f"Error generating embedding for Post {instance.pk}: {e}")
+        logger.error(f"Error handling embedding for Post {instance.pk}: {e}")
 
 @receiver(m2m_changed, sender=Post.like_users.through)
 def handle_like_interaction(sender, instance, action, pk_set, **kwargs):

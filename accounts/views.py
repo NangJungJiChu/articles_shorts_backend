@@ -1,7 +1,7 @@
 from rest_framework import generics
 from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,12 +9,15 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from PIL import Image
 from io import BytesIO
 from django.core.files.base import ContentFile
+from django.conf import settings
+from django.shortcuts import redirect
+import requests
 
 # Create your views here.
-User = get_user_model()
 
 class SignupView(generics.CreateAPIView):
-    queryset = User.objects.all()
+    def get_queryset(self):
+        return get_user_model().objects.all()
     serializer_class = UserSerializer
 
 class UserDetailView(APIView):
@@ -25,6 +28,7 @@ class UserDetailView(APIView):
             'username': request.user.username,
             'email': request.user.email,
             'profile_img': request.user.profile_img.url if request.user.profile_img else None,
+            'is_pass_verified': request.user.is_pass_verified,
             # Add other fields if needed
         })
 
@@ -104,3 +108,192 @@ class ProfileImageUpdateView(APIView):
             import traceback
             traceback.print_exc()
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class PassVerificationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Mock PASS verification
+        user = request.user
+        user.is_pass_verified = True
+        user.save()
+        return Response({'message': 'PASS verification successful', 'is_pass_verified': True})
+
+    def get(self, request):
+        return Response({'is_pass_verified': request.user.is_pass_verified})
+
+class KakaoLoginView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        kakao_auth_url = "https://kauth.kakao.com/oauth/authorize"
+        client_id = settings.KAKAO_REST_API_KEY
+        redirect_uri = settings.KAKAO_REDIRECT_URI
+        next_path = request.GET.get('next', '/profile')
+        
+        # Capture current user ID to persist across the redirect
+        user_id = request.user.id if request.user.is_authenticated else ""
+        # Store as "user_id|next_path"
+        state = f"{user_id}|{next_path}"
+
+        # If key is missing and we are in DEBUG, provide a Mock URL
+        if not client_id and settings.DEBUG:
+            mock_url = f"http://localhost:8000/accounts/api/kakao/mock-auth/?redirect_uri={redirect_uri}&state={state}"
+            return Response({'url': mock_url, 'is_mock': True})
+            
+        if not client_id:
+            return Response({'error': 'KAKAO_REST_API_KEY is not configured in .env'}, status=500)
+            
+        # Using 'state' to pass the return path AND user identification through Kakao
+        url = f"{kakao_auth_url}?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code&scope=account_email,age_range&state={state}"
+        return Response({'url': url})
+
+class KakaoMockAuthView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        if not settings.DEBUG:
+            return Response({'error': 'Not Found'}, status=404)
+        redirect_uri = request.GET.get('redirect_uri')
+        state = request.GET.get('state', '|')
+        mock_code = "sample_mock_auth_code_123"
+        return redirect(f"{redirect_uri}?code={mock_code}&is_mock=true&state={state}")
+
+class KakaoCallbackView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        code = request.GET.get('code')
+        is_mock = request.GET.get('is_mock') == 'true'
+        
+        if not code:
+            return Response({'error': 'No code provided'}, status=400)
+            
+        if is_mock and settings.DEBUG:
+            # Simulate Kakao's response for a 25-year-old user
+            kakao_account = {
+                'email': 'mockuser@example.com',
+                'age_range': '20~29'
+            }
+            access_token = 'mock_access_token'
+        else:
+            # 1. Exchange code for access token
+            token_url = "https://kauth.kakao.com/oauth/token"
+            data = {
+                'grant_type': 'authorization_code',
+                'client_id': settings.KAKAO_REST_API_KEY,
+                'redirect_uri': settings.KAKAO_REDIRECT_URI,
+                'code': code,
+            }
+            token_res = requests.post(token_url, data=data)
+            token_data = token_res.json()
+            access_token = token_data.get('access_token')
+            
+            if not access_token:
+                return Response({'error': 'Failed to get access token', 'details': token_data}, status=400)
+                
+            # 2. Get user info
+            user_info_url = "https://kapi.kakao.com/v2/user/me"
+            headers = {'Authorization': f'Bearer {access_token}'}
+            user_res = requests.get(user_info_url, headers=headers)
+            user_data = user_res.json()
+            kakao_account = user_data.get('kakao_account', {})
+        age_range = kakao_account.get('age_range') # "20~29", "10~14" etc.
+        
+        # 3. Verify age (19+ check)
+        is_adult = False
+        if age_range:
+            try:
+                start_age = int(age_range.split('~')[0])
+                if start_age >= 20: 
+                    is_adult = True
+            except:
+                pass
+        
+        # 4. Find/Create User and Login
+        email = kakao_account.get('email')
+        
+        # Parse state: "user_id|next_path"
+        state_raw = request.GET.get('state', '|')
+        try:
+            stored_user_id, next_path = state_raw.split('|', 1)
+        except ValueError:
+            stored_user_id, next_path = "", "/profile"
+
+        frontend_base = settings.KAKAO_FRONTEND_REDIRECT_URI.split('/profile')[0]
+        redirect_to = f"{frontend_base}{next_path}"
+
+        if not email:
+            return redirect(f"{redirect_to}?verification=fail&reason=no_email")
+            
+        if not is_adult:
+            return redirect(f"{redirect_to}?verification=fail&reason=underage")
+
+        # Get or create user
+        User = get_user_model()
+        user = None
+        
+        # Priority 1: Use the stored user ID from the state (persisted across redirect)
+        if stored_user_id:
+            try:
+                user = User.objects.get(id=stored_user_id)
+                # Link the email if it wasn't there
+                if not user.email:
+                    user.email = email
+            except User.DoesNotExist:
+                pass
+        
+        # Priority 2: Find by email or create new if not linked yet
+        if not user:
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                import uuid
+                username = f"kakao_{str(uuid.uuid4())[:8]}"
+                user = User.objects.create_user(username=username, email=email)
+        
+        # Mark as verified
+        user.is_pass_verified = True
+        user.save()
+        
+        # Generate JWT Tokens
+        from rest_framework_simplejwt.tokens import RefreshToken
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
+        
+        return redirect(f"{redirect_to}?verification=success&access={access_token}&refresh={refresh_token}")
+
+
+class UserDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        
+        # Hard delete or Soft delete? 
+        # For "Withdrawal", usually hard delete or permanent deactivation.
+        # Let's do hard delete for this MVP.
+        user.delete()
+        
+        return Response({'message': 'Account deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+class PasswordChangeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        old_password = request.data.get('old_password')
+        new_password = request.data.get('new_password')
+        
+        if not old_password or not new_password:
+            return Response({'error': 'Both old and new passwords are required'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        if not user.check_password(old_password):
+            return Response({'error': 'Invalid old password'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        user.set_password(new_password)
+        user.save()
+        
+        # Updating password logs out all other sessions (invalidates session auth), 
+        # but for JWT, the old tokens remain valid until expiration unless we use a blacklist.
+        # For this MVP, we just update the password.
+        
+        return Response({'message': 'Password updated successfully'}, status=status.HTTP_200_OK)

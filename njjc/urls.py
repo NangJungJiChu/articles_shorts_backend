@@ -19,10 +19,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from .views import health_check
+from accounts.views import KakaoLoginView, KakaoCallbackView, KakaoMockAuthView
 
 urlpatterns = [
     path('health/', health_check, name='health_check'),
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')), 
+    path('accounts/api/kakao/login/', KakaoLoginView.as_view(), name='kakao_login_direct'),
+    path('accounts/api/kakao/mock-auth/', KakaoMockAuthView.as_view(), name='kakao_mock_auth_direct'),
+    path('accounts/api/kakao/callback/', KakaoCallbackView.as_view(), name='kakao_callback_direct'),
     path('accounts/', include('accounts.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
