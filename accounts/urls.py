@@ -16,4 +16,6 @@ urlpatterns = [
     path('api/user/image/', views.ProfileImageUpdateView.as_view(), name='user_image_update'),
     path('api/onboarding/', views.UserOnboardingView.as_view(), name='user_onboarding'),
     path('api/pass-verification/', views.PassVerificationView.as_view(), name='pass_verification'),
+    path('api/user/delete/', views.UserDeleteView.as_view(), name='user_delete'),
+    path('api/password/change/', views.PasswordChangeView.as_view(), name='password_change'),
 ]

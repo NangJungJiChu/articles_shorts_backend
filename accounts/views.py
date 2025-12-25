@@ -260,3 +260,40 @@ class KakaoCallbackView(APIView):
         refresh_token = str(refresh)
         
         return redirect(f"{redirect_to}?verification=success&access={access_token}&refresh={refresh_token}")
+
+
+class UserDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        
+        # Hard delete or Soft delete? 
+        # For "Withdrawal", usually hard delete or permanent deactivation.
+        # Let's do hard delete for this MVP.
+        user.delete()
+        
+        return Response({'message': 'Account deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+class PasswordChangeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        old_password = request.data.get('old_password')
+        new_password = request.data.get('new_password')
+        
+        if not old_password or not new_password:
+            return Response({'error': 'Both old and new passwords are required'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        if not user.check_password(old_password):
+            return Response({'error': 'Invalid old password'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        user.set_password(new_password)
+        user.save()
+        
+        # Updating password logs out all other sessions (invalidates session auth), 
+        # but for JWT, the old tokens remain valid until expiration unless we use a blacklist.
+        # For this MVP, we just update the password.
+        
+        return Response({'message': 'Password updated successfully'}, status=status.HTTP_200_OK)
